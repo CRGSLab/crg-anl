@@ -1,0 +1,87 @@
+# CRG-ANL Benchmark Result Schema
+# ================================
+# Canonical specification for benchmark execution results.
+#
+# Version: 0.1.0
+
+schema:
+  name: benchmark_result
+  version: "0.1.0"
+  description: Structured output from benchmark engine execution.
+
+required_fields:
+  - run_id
+  - timestamp
+  - study
+  - overall_score
+
+fields:
+  run_id:
+    type: string
+    example: "bench-2026-04-30-001"
+
+  timestamp:
+    type: string
+    format: ISO 8601 datetime
+
+  study:
+    type: string
+
+  session_range:
+    type: object
+    properties:
+      start_session: { type: integer }
+      end_session: { type: integer }
+
+  schema_version:
+    type: string
+    default: "0.1.0"
+
+  primary_dimensions:
+    type: array
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+          enum: [cognitive_safety, instructional_integrity, learner_agency, human_ai_shared_responsibility, transition_integrity]
+        score:
+          type: number
+          minimum: 0
+          maximum: 1
+        weight:
+          type: number
+        sub_dimensions:
+          type: array
+          items:
+            type: object
+            properties:
+              name: { type: string }
+              score: { type: number, minimum: 0, maximum: 1 }
+              weight: { type: number }
+              observation_count: { type: integer }
+              severity_distribution:
+                type: object
+                properties:
+                  "1": { type: integer }
+                  "2": { type: integer }
+                  "3": { type: integer }
+                  "4": { type: integer }
+                  "5": { type: integer }
+
+  overall_score:
+    type: number
+    minimum: 0
+    maximum: 1
+
+  classification:
+    type: string
+    enum: [excellent, good, moderate, poor, critical]
+
+  metadata:
+    type: object
+    properties:
+      total_observations: { type: integer }
+      coded_observations: { type: integer }
+      uncoded_observations: { type: integer }
+      created_at: { type: string, format: ISO 8601 datetime }

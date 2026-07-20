@@ -1,0 +1,23 @@
+# analysis
+
+**Purpose:**  
+Directory for analysis within the 05_experiments workstream.
+
+**Relationships:**  
+- Part of the 05_experiments workstream
+- See parent README at ../README.md for full context
+
+**Inputs:**  
+- See parent workstream README
+
+**Outputs:**  
+- See parent workstream README
+
+**Ownership:**  
+See parent workstream README
+
+---
+
+## Status
+
+Awaiting content deposition.

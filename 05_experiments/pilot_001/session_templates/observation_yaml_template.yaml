@@ -1,0 +1,71 @@
+observation_id: "obs-YYYYMMDD-NNN"
+study: "pilot_001"
+session_id: "pilot001-session-NNN"
+timestamp: "YYYY-MM-DDTHH:MM:SSZ"
+
+observer:
+  role: "researcher"
+  experience_level: "[beginner/intermediate/advanced]"
+
+context:
+  course: "[course-name]"
+  lesson: "[lesson-name]"
+  device: "[mobile/tablet/desktop]"
+  environment: "[home/commute/work/other]"
+  session_duration_minutes: [NN]
+  interaction_count: [NN]
+
+observation_type: "[confusion_episode/transition/guidance_event/assessment/safety_incident/etc]"
+description: >
+  [Write 2-4 sentences describing what happened, what the system did,
+  and what your experience was. Be specific enough that you would
+  understand this in 6 months.]
+
+constructs_involved:
+  primary: "[C1-C10 code]"
+  secondary: ["[C1-C10 code if applicable]"]
+  taxonomy_codes: ["[II-1, CS-2, etc.]"]
+
+instructional_integrity_dimension: "[dimension or null]"
+cognitive_safety_impact: "[impact type or null]"
+human_agency: "[active/passive/not-engaged]"
+shared_responsibility: "[engaged/not-engaged/unclear]"
+severity: [1-5]
+
+sx_micro_pulse:
+  clarity: [1-5]
+  cognitive_load: [1-5]
+  affect: [1-5]
+  perceived_control: [1-5]
+  trust: [1-5]
+
+immediate_outcome: "[success/partial_success/failure/abandoned/not_applicable]"
+perceived_clarity: [1-7]
+observer_confidence: [1-5]
+
+supporting_evidence:
+  - type: "[screenshot/session_log]"
+    file: "[relative/path/to/evidence]"
+    description: "[what this evidence shows]"
+
+research_memo: >
+  [Any analytical thoughts, patterns, or questions this observation raises.
+  This is where you do early analysis.]
+
+candidate_intervention: >
+  [If applicable, what would have improved this experience?
+  Skip if nothing comes to mind.]
+
+future_benchmark_mapping:
+  dimension: "[Primary dimension]"
+  sub_dimension: "[Sub-dimension if applicable]"
+  severity: [1-5]
+
+privacy:
+  contains_pii: [true/false]
+  consent_basis: "[self_consent/written/electronic]"
+  retention_class: "[research_permanent/7_years/3_years/1_year/destroy]"
+
+metadata:
+  created_at: "YYYY-MM-DDTHH:MM:SSZ"
+  schema_version: "0.1.0"

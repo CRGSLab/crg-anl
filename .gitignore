@@ -1,0 +1,52 @@
+# CRG-ANL Scientific Operating System — Git Ignore
+# ================================================
+# Research data and personal artifacts that must never be version-controlled.
+
+# --- Evidence directories (content only, not structure) ---
+03_evidence/screenshots/*
+03_evidence/field_notes/*
+03_evidence/datasets/*
+03_evidence/analysis_exports/*
+!03_evidence/**/README.md
+
+# --- Literature (personal copies, not redistributable) ---
+04_literature/papers/*.pdf
+04_literature/books/*.pdf
+04_literature/quantic/*.pdf
+!04_literature/**/README.md
+
+# --- Publications (generated artifacts) ---
+06_publications/papers/*.pdf
+06_publications/figures/*
+06_publications/tables/*
+06_publications/supplementary/*
+06_publications/presentations/*
+!06_publications/**/README.md
+
+# --- Experiments (generated results, not protocols) ---
+05_experiments/**/results/*
+05_experiments/colab/*.ipynb_checkpoints/
+05_experiments/**/.env
+!05_experiments/**/README.md
+!05_experiments/**/protocol*
+!05_experiments/**/template*
+
+# --- Operating system files ---
+.DS_Store
+Thumbs.db
+
+# --- Editor artifacts ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# --- Temporary files ---
+*.tmp
+*.log
+*.bak
+
+# --- Environment variables ---
+.env
+.env.local

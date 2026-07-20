@@ -1,0 +1,90 @@
+# CRG-ANL Experiment Schema
+# =========================
+# Canonical specification for a study or experiment.
+#
+# Version: 0.1.0
+
+schema:
+  name: experiment
+  version: "0.1.0"
+  description: Top-level metadata for a CRG-ANL study or pilot.
+
+required_fields:
+  - experiment_id
+  - title
+  - principal_investigator
+  - start_date
+
+fields:
+  experiment_id:
+    type: string
+    example: "pilot_001"
+
+  title:
+    type: string
+    example: "Quantic Longitudinal Researcher-as-Subject Pilot"
+
+  principal_investigator:
+    type: string
+
+  status:
+    type: string
+    enum: [planned, active, completed, archived]
+    default: planned
+
+  start_date:
+    type: string
+    format: ISO 8601 date
+
+  expected_end_date:
+    type: string
+    format: ISO 8601 date
+
+  platform:
+    type: string
+    description: AI-native educational platform being studied
+    example: "Quantic School of Business and Technology"
+
+  program:
+    type: string
+    description: Educational program within the platform
+    example: "MS in Artificial Intelligence Engineering"
+
+  research_questions:
+    type: array
+    items: { type: string }
+    description: Research questions this experiment addresses
+
+  hypotheses:
+    type: array
+    items: { type: string }
+    description: Hypotheses being tested
+
+  methodology:
+    type: string
+    description: Research methodology
+    example: "researcher-as-subject longitudinal observation"
+
+  expected_sessions:
+    type: integer
+    description: Expected number of sessions
+
+  completed_sessions:
+    type: integer
+    description: Completed sessions
+    default: 0
+
+  total_observations:
+    type: integer
+    description: Total observations collected
+    default: 0
+
+  ethics_approval:
+    type: string
+    description: Ethics approval reference if applicable
+
+  metadata:
+    type: object
+    properties:
+      created_at: { type: string, format: ISO 8601 datetime }
+      schema_version: { type: string }

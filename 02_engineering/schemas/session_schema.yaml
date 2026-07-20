@@ -1,0 +1,96 @@
+# CRG-ANL Session Schema
+# ======================
+# Canonical specification for a research session.
+#
+# Version: 0.1.0
+
+schema:
+  name: session
+  version: "0.1.0"
+  description: Metadata and summary for a single researcher-as-subject learning session.
+
+required_fields:
+  - session_id
+  - study
+  - session_number
+  - date
+  - duration_minutes
+
+fields:
+  session_id:
+    type: string
+    format: "{study}-session-{NNN}"
+    example: "pilot001-session-003"
+
+  study:
+    type: string
+    description: Parent study identifier
+    example: "pilot_001"
+
+  session_number:
+    type: integer
+    description: Sequential session number within the study
+    example: 3
+
+  date:
+    type: string
+    format: ISO 8601 date
+    example: "2026-04-15"
+
+  course:
+    type: string
+    description: Course being studied
+    example: "ml-fundamentals"
+
+  lesson:
+    type: string
+    description: Lesson or content unit
+    example: "supervised-learning-basics"
+
+  duration_minutes:
+    type: integer
+    description: Actual session duration in minutes
+    example: 45
+
+  device:
+    type: string
+    enum: [mobile, tablet, desktop]
+    description: Device used for the session
+
+  environment:
+    type: string
+    description: Learning environment description
+    example: "quiet home office"
+
+  baseline_state:
+    type: object
+    description: Pre-session state assessment
+    properties:
+      energy: { type: integer, minimum: 1, maximum: 7 }
+      stress: { type: integer, minimum: 1, maximum: 7 }
+      prior_knowledge: { type: integer, minimum: 1, maximum: 7 }
+      motivation: { type: integer, minimum: 1, maximum: 7 }
+
+  goal:
+    type: string
+    description: Learner-defined goal for the session
+
+  observation_count:
+    type: integer
+    description: Number of observations recorded
+
+  severity_distribution:
+    type: object
+    description: Count of observations by severity
+    properties:
+      "1": { type: integer }
+      "2": { type: integer }
+      "3": { type: integer }
+      "4": { type: integer }
+      "5": { type: integer }
+
+  metadata:
+    type: object
+    properties:
+      created_at: { type: string, format: ISO 8601 datetime }
+      schema_version: { type: string }

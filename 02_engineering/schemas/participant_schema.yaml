@@ -1,0 +1,241 @@
+# CRG-ANL Participant Schema
+# ==========================
+# Canonical specification for participant metadata.
+# For Pilot 001, the researcher is the sole participant.
+# Designed to scale to multi-participant cohort studies.
+#
+# Version: 0.1.0
+
+schema:
+  name: participant
+  version: "0.1.0"
+  description: >
+    Metadata and baseline characteristics for a research participant.
+    In researcher-as-subject studies, this describes the researcher.
+    In cohort studies, this describes each enrolled student.
+
+required_fields:
+  - participant_id
+  - role
+  - study
+  - enrollment_date
+
+fields:
+  participant_id:
+    type: string
+    format: "{study}-{role}-{NNN}"
+    description: Pseudonymous unique identifier
+    example: "pilot001-researcher-001"
+
+  role:
+    type: string
+    enum: [researcher, student, instructor, administrator, observer]
+    description: Participant's role in the study context
+    example: "researcher"
+
+  study:
+    type: string
+    description: Parent study identifier
+    example: "pilot_001"
+
+  enrollment_date:
+    type: string
+    format: ISO 8601 date
+    description: Date participant joined the study
+    example: "2026-01-15"
+
+  # --- Baseline Characteristics ---
+
+  demographics:
+    type: object
+    description: Optional demographic information (cohort studies)
+    properties:
+      age_range:
+        type: string
+        enum: [18-24, 25-34, 35-44, 45-54, 55+, prefer_not_to_say]
+      gender:
+        type: string
+        enum: [male, female, non_binary, prefer_not_to_say, other]
+      education_level:
+        type: string
+        enum: [high_school, some_college, bachelors, masters, doctorate, other]
+      employment_status:
+        type: string
+        enum: [full_time, part_time, self_employed, unemployed, student, other]
+    notes: >
+      All demographic fields are optional.
+      In researcher-as-subject studies, demographics may be omitted
+      or recorded at a high level to maintain anonymity.
+
+  professional_background:
+    type: object
+    description: Professional and educational background
+    properties:
+      years_experience_technology:
+        type: integer
+        minimum: 0
+        maximum: 50
+        description: Years of professional technology experience
+      years_experience_ai_ml:
+        type: integer
+        minimum: 0
+        maximum: 50
+        description: Years of AI/ML-specific experience
+      current_role:
+        type: string
+        description: Current professional role
+        example: "Software Engineer"
+      industry:
+        type: string
+        description: Primary industry sector
+        example: "Technology"
+      prior_education:
+        type: string
+        description: Highest completed degree and field
+        example: "BS Computer Science"
+
+  # --- Study-Specific Baseline ---
+
+  ai_engineering_baseline:
+    type: object
+    description: Baseline knowledge and skills specific to AI Engineering
+    properties:
+      programming_proficiency:
+        type: integer
+        minimum: 1
+        maximum: 7
+        description: Self-rated programming proficiency (1 = beginner, 7 = expert)
+      mathematics_proficiency:
+        type: integer
+        minimum: 1
+        maximum: 7
+        description: Linear algebra, calculus, statistics (1 = beginner, 7 = expert)
+      ml_theory_knowledge:
+        type: integer
+        minimum: 1
+        maximum: 7
+        description: ML algorithms and theory (1 = beginner, 7 = expert)
+      deep_learning_experience:
+        type: integer
+        minimum: 1
+        maximum: 7
+        description: Deep learning frameworks and practice (1 = none, 7 = extensive)
+      nlp_experience:
+        type: integer
+        minimum: 1
+        maximum: 7
+        description: Natural language processing (1 = none, 7 = extensive)
+      cv_experience:
+        type: integer
+        minimum: 1
+        maximum: 7
+        description: Computer vision (1 = none, 7 = extensive)
+      mlops_experience:
+        type: integer
+        minimum: 1
+        maximum: 7
+        description: MLOps and deployment (1 = none, 7 = extensive)
+
+  learning_preferences:
+    type: object
+    description: Preferred learning modalities and patterns
+    properties:
+      preferred_device:
+        type: string
+        enum: [mobile, tablet, desktop, mixed]
+      preferred_session_duration:
+        type: integer
+        description: Preferred minutes per session
+        example: 45
+      preferred_time_of_day:
+        type: string
+        enum: [morning, midday, afternoon, evening, variable]
+      prior_online_learning_experience:
+        type: integer
+        minimum: 1
+        maximum: 7
+        description: Experience with online learning platforms (1 = none, 7 = extensive)
+      prior_ai_tutor_experience:
+        type: integer
+        minimum: 1
+        maximum: 7
+        description: Experience with AI tutoring systems (1 = none, 7 = extensive)
+
+  # --- Consent and Ethics ---
+
+  consent:
+    type: object
+    description: Consent and ethical participation records
+    properties:
+      consent_date:
+        type: string
+        format: ISO 8601 date
+        description: Date consent was obtained
+      consent_type:
+        type: string
+        enum: [self_consent, written, electronic, verbal_recorded]
+        description: Type of consent obtained
+      consent_scope:
+        type: array
+        items: { type: string }
+        description: What the participant consented to
+        example: ["observation", "self_report", "screenshots", "publication"]
+      withdrawal_date:
+        type: string
+        format: ISO 8601 date
+        description: Date of withdrawal if applicable
+      withdrawal_reason:
+        type: string
+        description: Reason for withdrawal if applicable
+
+  # --- Metadata ---
+
+  metadata:
+    type: object
+    properties:
+      created_at:
+        type: string
+        format: ISO 8601 datetime
+      updated_at:
+        type: string
+        format: ISO 8601 datetime
+      schema_version:
+        type: string
+        example: "0.1.0"
+      notes:
+        type: string
+        description: Any additional notes about this participant record
+
+example:
+  participant_id: "pilot001-researcher-001"
+  role: "researcher"
+  study: "pilot_001"
+  enrollment_date: "2026-01-15"
+  professional_background:
+    years_experience_technology: 10
+    years_experience_ai_ml: 3
+    current_role: "Software Engineer"
+    industry: "Technology"
+    prior_education: "BS Computer Science"
+  ai_engineering_baseline:
+    programming_proficiency: 6
+    mathematics_proficiency: 4
+    ml_theory_knowledge: 4
+    deep_learning_experience: 3
+    nlp_experience: 2
+    cv_experience: 2
+    mlops_experience: 3
+  learning_preferences:
+    preferred_device: "desktop"
+    preferred_session_duration: 45
+    preferred_time_of_day: "evening"
+    prior_online_learning_experience: 5
+    prior_ai_tutor_experience: 2
+  consent:
+    consent_date: "2026-01-15"
+    consent_type: "self_consent"
+    consent_scope: ["observation", "self_report", "screenshots", "publication"]
+  metadata:
+    created_at: "2026-01-15T09:00:00Z"
+    schema_version: "0.1.0"
+    notes: "Researcher-as-subject in Pilot 001"

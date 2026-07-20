@@ -1,0 +1,348 @@
+# CRG-ANL Observation Schema
+# ==========================
+# Canonical specification for recording structured observations during
+# researcher-as-subject research sessions.
+#
+# Version: 0.1.0
+# Status: Foundation complete
+# Format: YAML
+
+schema:
+  name: observation
+  version: "0.1.0"
+  description: |
+    A structured record of a single instructional event observed during
+    a researcher-as-subject learning session. Each observation captures
+    the event, its context, its impacts, and its analytical significance.
+
+required_fields:
+  - observation_id
+  - study
+  - course
+  - lesson
+  - timestamp
+  - observation_type
+  - severity
+
+fields:
+  observation_id:
+    type: string
+    format: "OBS-{study}-{session_number}-{sequence_number}"
+    description: Unique identifier for this observation
+    example: "OBS-pilot001-003-012"
+
+  study:
+    type: string
+    description: Identifier for the study or pilot this observation belongs to
+    example: "pilot_001"
+
+  course:
+    type: string
+    description: Course code or identifier
+    example: "ml-fundamentals"
+
+  lesson:
+    type: string
+    description: Lesson or content unit identifier
+    example: "supervised-learning-basics"
+
+  session_number:
+    type: integer
+    description: Sequential session number within the study
+    example: 3
+
+  sequence_number:
+    type: integer
+    description: Sequence number of this observation within the session
+    example: 12
+
+  timestamp:
+    type: string
+    format: ISO 8601 datetime
+    description: When the observation occurred
+    example: "2026-04-15T14:32:18Z"
+
+  participant_id:
+    type: string
+    description: Anonymous identifier for the participant (researcher-as-subject)
+    example: "P001"
+
+  role:
+    type: string
+    enum: [student, researcher, researcher_as_subject]
+    description: Role of the participant in this observation
+    default: researcher_as_subject
+
+  experience_level:
+    type: string
+    enum: [novice, intermediate, advanced, expert]
+    description: Participant's self-assessed experience level with the topic
+    example: intermediate
+
+  environment:
+    type: string
+    description: Physical and digital environment context
+    example: "quiet home office, mobile device, evening"
+
+  observation_type:
+    type: string
+    enum:
+      - content_generation
+      - scaffolding_provision
+      - assessment_presentation
+      - feedback_provision
+      - difficulty_adjustment
+      - topic_transition
+      - modality_transition
+      - ai_error
+      - ai_hallucination
+      - learner_confusion
+      - learner_struggle
+      - learner_request
+      - break_or_pause
+      - session_opening
+      - session_closing
+      - governance_violation
+      - intervention_triggered
+      - agency_erosion
+      - responsibility_shift
+      - other
+    description: Category of instructional event observed
+
+  session_id:
+    type: string
+    description: Unique session identifier for linking exposure/dose metrics
+    example: "pilot001-session-003"
+
+  duration_minutes:
+    type: number
+    description: Duration of the instructional episode or interaction in minutes
+    example: 12.5
+
+  interaction_count:
+    type: integer
+    description: Number of learner-AI exchanges in the episode preceding this observation
+    example: 8
+
+  runtime_trigger:
+    type: string
+    description: What specific event or condition triggered this observation
+    example: "AI explained gradient descent using chain rule notation before introducing chain rule"
+
+  instructional_integrity_dimension:
+    type: string
+    enum:
+      - assessment_integrity
+      - scaffolding_integrity
+      - navigation_integrity
+      - transition_integrity
+      - feedback_integrity
+      - accessibility_integrity
+      - not_applicable
+    description: Which instructional integrity dimension this observation relates to, if any
+    default: not_applicable
+
+  cognitive_safety_impact:
+    type: string
+    enum:
+      - none
+      - minor
+      - moderate
+      - severe
+    description: Impact on learner cognitive safety
+    default: none
+
+  human_agency:
+    type: string
+    enum:
+      - preserved
+      - eroded
+      - restored
+      - not_applicable
+    description: Effect on learner agency
+    default: not_applicable
+
+  shared_responsibility:
+    type: string
+    enum:
+      - appropriate
+      - skewed_toward_ai
+      - skewed_toward_human
+      - unclear
+      - not_applicable
+    description: Assessment of responsibility distribution
+    default: not_applicable
+
+  severity:
+    type: integer
+    minimum: 1
+    maximum: 5
+    description: |
+      Severity of the observation:
+      1 = Minor (negligible impact, easily corrected)
+      2 = Low (minor impact, may cause brief confusion)
+      3 = Moderate (noticeable impact, requires intervention)
+      4 = High (significant impact, impairs learning)
+      5 = Critical (severe impact, may cause lasting harm or abandonment)
+
+  evidence_references:
+    type: array
+    items:
+      type: string
+    description: References to supporting evidence (screenshots, logs, artifacts)
+    example: ["screenshot_003_014.png", "interaction_log_line_234"]
+
+  research_memo:
+    type: string
+    description: Analytical note, interpretation, or theoretical significance
+    example: |
+      This scaffolding integrity failure demonstrates a prerequisite violation —
+      the AI assumed knowledge of the chain rule before it was taught. This
+      pattern may be common in generative tutoring systems that lack explicit
+      prerequisite checking.
+
+  candidate_intervention:
+    type: string
+    description: Proposed intervention that would address this observation
+    example: |
+      A runtime governance rule should check prerequisite knowledge before
+      generating explanations, and either provide the prerequisite or
+      generate an explanation that does not require it.
+
+  future_benchmark_mapping:
+    type: array
+    items:
+      type: string
+    description: Benchmark taxonomy dimensions this observation maps to
+    example:
+      - "II.2.A"  # Scaffolding Integrity - Correctness
+      - "CS.2"     # Cognitive Safety - Confusion & Frustration
+
+  nasa_tlx:
+    type: object
+    description: NASA-TLX ratings at time of observation (if measured)
+    properties:
+      mental_demand: { type: integer, minimum: 0, maximum: 100 }
+      physical_demand: { type: integer, minimum: 0, maximum: 100 }
+      temporal_demand: { type: integer, minimum: 0, maximum: 100 }
+      performance: { type: integer, minimum: 0, maximum: 100 }
+      effort: { type: integer, minimum: 0, maximum: 100 }
+      frustration: { type: integer, minimum: 0, maximum: 100 }
+
+  subjective_ratings:
+    type: object
+    description: Subjective scale ratings at time of observation
+    properties:
+      control: { type: integer, minimum: 1, maximum: 7 }
+      transparency: { type: integer, minimum: 1, maximum: 7 }
+      trust: { type: integer, minimum: 1, maximum: 7 }
+      emotional_safety: { type: integer, minimum: 1, maximum: 7 }
+      pace_appropriateness: { type: integer, minimum: 1, maximum: 7 }
+      difficulty_appropriateness: { type: integer, minimum: 1, maximum: 7 }
+
+  immediate_outcome:
+    type: string
+    enum: [success, partial_success, failure, abandoned, not_applicable]
+    description: Immediate learner outcome following the observed instructional event
+    default: not_applicable
+
+  perceived_clarity:
+    type: integer
+    minimum: 1
+    maximum: 7
+    description: Learner's perceived clarity of the instructional event (1 = completely unclear, 7 = perfectly clear)
+
+  observer_confidence:
+    type: integer
+    minimum: 1
+    maximum: 5
+    description: Researcher's confidence in the accuracy of this observation coding (1 = guess, 5 = certain)
+    default: 3
+
+  contains_pii:
+    type: boolean
+    description: Whether this observation contains personally identifiable information
+    default: false
+
+  consent_basis:
+    type: string
+    enum: [self_consent_researcher_as_subject, platform_tos, institutional_irb, not_applicable]
+    description: Basis for ethical collection of this data
+    default: self_consent_researcher_as_subject
+
+  retention_class:
+    type: string
+    enum: [permanent, long_term_7yr, medium_term_3yr, short_term_1yr, destroy_post_analysis]
+    description: Data retention classification for this observation
+    default: long_term_7yr
+
+  metadata:
+    type: object
+    description: Additional metadata
+    properties:
+      created_at:
+        type: string
+        format: ISO 8601 datetime
+      created_by:
+        type: string
+        description: Researcher identifier
+      schema_version:
+        type: string
+        description: Version of observation schema used
+      validation_status:
+        type: string
+        enum: [pending, valid, invalid]
+        default: pending
+
+# Example Observation
+example:
+  observation_id: "OBS-pilot001-003-012"
+  study: "pilot_001"
+  course: "ml-fundamentals"
+  lesson: "supervised-learning-basics"
+  session_number: 3
+  sequence_number: 12
+  timestamp: "2026-04-15T14:32:18Z"
+  participant_id: "P001"
+  role: researcher_as_subject
+  experience_level: intermediate
+  environment: "quiet home office, mobile device"
+  session_id: "pilot001-session-003"
+  duration_minutes: 8.0
+  interaction_count: 6
+  observation_type: "scaffolding_provision"
+  runtime_trigger: |
+    AI explained gradient descent using chain rule notation before
+    introducing the chain rule concept in the curriculum.
+  instructional_integrity_dimension: "scaffolding_integrity"
+  cognitive_safety_impact: "moderate"
+  human_agency: "not_applicable"
+  shared_responsibility: "not_applicable"
+  severity: 3
+  evidence_references:
+    - "screenshot_003_014.png"
+    - "session_003_notes.md"
+  research_memo: |
+    Prerequisite violation in scaffolding. The AI assumed knowledge of
+    the chain rule, which has not been covered. This is a scaffolding
+    integrity failure (II.2.B - completeness) that creates cognitive
+    load (CS.2 - confusion). Pattern may recur in generative systems
+    lacking explicit prerequisite graphs.
+  candidate_intervention: |
+    Runtime governance should verify prerequisite coverage before
+    generating explanations. If prerequisite is missing, either
+    provide it or generate alternative explanation.
+  future_benchmark_mapping:
+    - "II.2.B"
+    - "CS.2"
+  immediate_outcome: partial_success
+  perceived_clarity: 3
+  observer_confidence: 4
+  contains_pii: false
+  consent_basis: self_consent_researcher_as_subject
+  retention_class: long_term_7yr
+  metadata:
+    created_at: "2026-04-15T14:45:00Z"
+    created_by: "researcher_001"
+    schema_version: "0.1.0"
+    validation_status: "valid"
