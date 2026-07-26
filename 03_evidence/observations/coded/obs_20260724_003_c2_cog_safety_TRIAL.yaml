@@ -1,0 +1,76 @@
+observation_id: "obs-20260724-003-TRIAL"
+study: "pilot_001"
+session_id: "pilot001-session-001-TRIAL"
+timestamp: "2026-07-24T15:05:00Z"
+
+observer:
+  role: "researcher"
+  experience_level: "intermediate"
+
+context:
+  course: "ml-fundamentals"
+  lesson: "optimization-algorithms"
+  device: "desktop"
+  environment: "home"
+  session_duration_minutes: 45
+  interaction_count: 3
+
+observation_type: "scaffolding_provision"
+description: >
+  After detecting the learner skipped a quiz question, the AI tutor
+  proactively offered a simplified analogy-based explanation of gradient
+  descent (hiking down a mountain) with a visual contour plot. The
+  researcher understood immediately and felt supported.
+
+constructs_involved:
+  primary: "c2_cog_safety"
+  secondary: ["c3_inst_integrity", "c5_shared_resp"]
+  taxonomy_codes: []
+
+instructional_integrity_dimension: "scaffolding_integrity"
+cognitive_safety_impact: "minor"
+human_agency: "preserved"
+shared_responsibility: "appropriate"
+severity: 2
+
+sx_micro_pulse:
+  clarity: 4
+  cognitive_load: 2
+  affect: 4
+  perceived_control: 4
+  trust: 4
+
+immediate_outcome: "success"
+perceived_clarity: 5
+observer_confidence: 5
+
+supporting_evidence:
+  - type: "session_log"
+    file: "session_logs/session_log_2026-07-24_1430_TRIAL.md"
+    description: "Real-time log entry at Event 3"
+
+research_memo: >
+  Positive example of adaptive scaffolding. The system detected struggle
+  (skipped question) and responded with an alternative explanation
+  modality (analogy + visual). This restored cognitive safety and
+  learner agency. Pattern to encourage.
+
+candidate_intervention: >
+  This is the desired behavior. Ensure all AI tutors can detect
+  struggle signals (skipped questions, long hesitation) and respond
+  with alternative explanation modalities.
+
+future_benchmark_mapping:
+  dimension: "Cognitive Safety"
+  sub_dimension: "scaffolding_integrity"
+  severity: 2
+
+privacy:
+  contains_pii: false
+  consent_basis: "self_consent"
+  retention_class: "research_permanent"
+
+metadata:
+  created_at: "2026-07-24T15:20:00Z"
+  schema_version: "0.1.0"
+  note: "TRIAL / DEMO SESSION — generated for workflow validation"
