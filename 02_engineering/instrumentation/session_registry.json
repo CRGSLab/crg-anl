@@ -1,0 +1,39 @@
+{
+  "sessions": [
+    {
+      "session_number": 1,
+      "session_id": "pilot001-session-001-TRIAL",
+      "date": "2026-07-24",
+      "start_time": "14:30",
+      "end_time": "18:35",
+      "duration_minutes": 245,
+      "device": "desktop",
+      "location": "home",
+      "course": "ml-fundamentals",
+      "lesson": "optimization-algorithms",
+      "goals": [
+        "Understand gradient descent intuitively",
+        "Complete the supervised learning module quiz"
+      ],
+      "event_count": 3,
+      "status": "completed",
+      "note": "TRIAL / DEMO SESSION"
+    },
+    {
+      "session_number": 2,
+      "session_id": "pilot001-session-002",
+      "date": "2026-07-26",
+      "start_time": "18:40",
+      "device": "desktop",
+      "location": "home",
+      "course": "orientation-ADOPTING AI IN YOUR ORGANIZATION",
+      "lesson": "ADOPTING AI IN YOUR ORGANIZATION",
+      "goals": [
+        "Test this research platfrom while learning the content.."
+      ],
+      "status": "active"
+    }
+  ],
+  "next_session_number": 3,
+  "study": "pilot_001"
+}

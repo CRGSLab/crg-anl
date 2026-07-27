@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# CRG-ANL Session Manager wrapper
+# Usage: crg <command> [args]
+# Add to your PATH or alias this script for convenience
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+python3 "$SCRIPT_DIR/crg_session.py" "$@"

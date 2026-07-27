@@ -1,0 +1,206 @@
+#!/usr/bin/env bash
+# CRG-ANL Research Cockpit - Terminal & GUI Interface Launcher
+# Integrates the official @surething/cockpit CLI for all operations
+
+set -u
+
+# -----------------------------------------------------------------------------
+# Path Configuration
+# -----------------------------------------------------------------------------
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CRG_ANL_ROOT="/Users/coreyalejandro/projects/crg-anl"  # Fixed path to crg-anl project
+COCKPIT_CLI="/opt/homebrew/bin/cockpit"
+
+# -----------------------------------------------------------------------------
+# Usage Message
+# -----------------------------------------------------------------------------
+usage() {
+    cat << 'EOF'
+CRG-ANL Research Cockpit - Terminal User Interface (TUI) & Graphical User Interface (GUI)
+
+Usage: ./cockpit <command> [options]
+
+Commands:
+  start              Start Cockpit GUI for the CRG-ANL project
+  gui                Alias for start  
+  tui                Run Cockpit TUI commands directly in terminal mode
+  explore            Quick exploration of project structure (TUI only)
+  help               Show this help message
+
+Examples:
+  ./cockpit start                     # Open GUI at http://localhost:3457/
+  ./cockpit tui connection list       # List all bubbles via CLI  
+  ./cockpit tui codegraph search .    # Search project code graph in terminal
+EOF
+    exit 0
+}
+
+# -----------------------------------------------------------------------------
+# Main Command Handler
+# -----------------------------------------------------------------------------
+case "${1:-help}" in
+    start|gui)
+        echo "Starting CRG-ANL Research Cockpit GUI..."
+        echo ""
+        echo "Project: $CRG_ANL_ROOT"
+        echo ""
+        echo "This will open your browser at http://localhost:3457/"
+        echo "Press Ctrl+C to stop the server."
+        echo ""
+        
+        # Start cockpit for the crg-anl project (without auto-opening browser)
+        if [[ -n "$COCKPIT_CLI" ]]; then
+            "$COCKPIT_CLI" "$CRG_ANL_ROOT" --no-open 2>/dev/null || true
+        else
+            echo "Warning: Cockpit CLI not found at: $COCKPIT_CLI"
+            echo "Install it with: brew install surething/cockpit/cockpit"
+            exit 1
+        fi
+        
+        ;;
+
+    tui)
+        shift
+        if [[ $# -eq 0 ]]; then
+            # Show TUI help and examples
+            echo "TUI Mode: Run Cockpit CLI commands directly in terminal mode"
+            echo ""
+            echo "Available TUI commands:"
+            echo "  connection list [--cwd PATH]   List all browser/terminal bubbles"
+            echo "  terminal <id> output           Read terminal bubble output"
+            echo "  codegraph search [options]     Search project code graph"
+            echo ""
+            echo "Examples:"
+            echo "  ./cockpit tui connection list --cwd $CRG_ANL_ROOT"
+            echo "  ./cockpit tui codegraph search $CRG_ANL_ROOT -p \"function\""  
+            echo "  ./cockpit tui terminal main output"
+            exit 0
+        fi
+        
+        # Run cockpit CLI command directly for TUI operations
+        if [[ -n "$COCKPIT_CLI" ]]; then
+            "$COCKPIT_CLI" "$@" --cwd "$CRG_ANL_ROOT" 2>/dev/null || true
+        else
+            echo "Error: Cockpit CLI not found at: $COCKPIT_CLI"
+            echo "Install it with: brew install surething/cockpit/cockpit"
+            exit 1
+        fi
+        
+        ;;
+
+    explore)
+        # -----------------------------------------------------------------------
+        # Terminal User Interface - Project Explorer
+        # -----------------------------------------------------------------------
+        echo "=== CRG-ANL Research Cockpit TUI ==="
+        echo ""
+        echo "Project: $CRG_ANL_ROOT"
+        
+        # Verify the path exists
+        if [[ ! -d "$CRG_ANL_ROOT" ]]; then
+            echo "Error: Path does not exist: $CRG_ANL_ROOT"
+            exit 1
+        fi
+        
+        echo ""
+        echo "--- Directory Structure (depth 2) ---"
+        find "$CRG_ANL_ROOT" -maxdepth 2 -type d 2>/dev/null | grep -v ".git" | \
+            sed 's/^/  /' || true
+        
+        echo ""
+        echo "--- Key Workstreams ---"
+        
+        # List the main workstream directories with their key files
+        for ws in 01_science 02_engineering 03_evidence 04_literature 05_experiments 06_publications 07_project_operations; do
+            if [[ -d "$CRG_ANL_ROOT/$ws" ]]; then
+                echo ""
+                echo "[+] $ws/"
+                
+                # Show key file in each workstream
+                for keyfile in README.md protocol.md research_program.md benchmark_taxonomy.md; do
+                    filepath="$CRG_ANL_ROOT/$ws/$keyfile"
+                    if [[ -f "$filepath" ]]; then
+                        linecount=$(wc -l < "$filepath")
+                        echo "      [  ] $keyfile ($linecount lines)"
+                    fi
+                done
+            else
+                echo "[-] $ws/ (not found)"
+            fi
+        done
+        
+        echo ""
+        echo "--- Instrumentation & Observations ---"
+        
+        # Show session registry if it exists
+        SESSION_REGISTRY="$CRG_ANL_ROOT/02_engineering/instrumentation/session_registry.json"
+        if [[ -f "$SESSION_REGISTRY" ]]; then
+            linecount=$(wc -l < "$SESSION_REGISTRY")
+            echo "[+] Session Registry: $SESSION_REGISTRY ($linecount lines)"
+            
+            # Count sessions using grep (handle edge cases)
+            total_sessions=$(grep -c '"session_id"' "$SESSION_REGISTRY" 2>/dev/null || echo "0")
+            active_count=$(grep -c '"status": *"active"' "$SESSION_REGISTRY" 2>/dev/null || echo "0")
+            completed=$((total_sessions - active_count))
+            
+            echo "    Total sessions: $total_sessions"
+            echo "    Completed:     $completed"
+        else
+            echo "[-] No session registry found at: $SESSION_REGISTRY"
+        fi
+        
+        # Show current observation files from coded/ directory
+        OBS_DIR="$CRG_ANL_ROOT/03_evidence/observations/coded/"
+        if [[ -d "$OBS_DIR" ]]; then
+            echo ""
+            
+            # Count directories and files
+            dir_count=$(ls -1d "$OBS_DIR" 2>/dev/null | wc -l)
+            file_count=$(find "$OBS_DIR" -maxdepth 1 -type f 2>/dev/null | wc -l)
+            
+            echo "[+] Observation directory: $OBS_DIR"
+            echo "    Directories: $dir_count"  
+            echo "    Files:       $file_count"
+            
+            # List recent observation files (newest first, top 5)
+            echo ""
+            echo "--- Recent Observation Files ---"
+            find "$OBS_DIR" -maxdepth 1 -type f 2>/dev/null | \
+                sort -r | head -5 | while IFS= read -r filepath; do
+                    if [[ -f "$filepath" ]]; then
+                        filename=$(basename "$filepath")
+                        linecount=$(wc -l < "$filepath")
+                        echo "    [ ] $filename ($linecount lines)"
+                    fi
+                done
+            
+            # Show non-TRIAL observation files  
+            non_trial_count=$(find "$OBS_DIR" -maxdepth 1 -type f ! -name "*_TRIAL.yaml" 2>/dev/null | wc -l)
+            if [[ $non_trial_count -gt 0 ]]; then
+                echo ""
+                echo "--- Non-TRIAL Observation Files ($non_trial_count found) ---"
+                find "$OBS_DIR" -maxdepth 1 -type f ! -name "*_TRIAL.yaml" 2>/dev/null | \
+                    head -3 | while IFS= read -r filepath; do
+                        if [[ -f "$filepath" ]]; then
+                            echo "    [ ] $(basename "$filepath")"
+                        fi
+                    done
+            fi
+            
+        else
+            echo "[-] No observation directory found at: $OBS_DIR"
+        fi
+        
+        ;;
+
+    help|"")
+        usage
+        ;;
+
+    *)
+        # Unknown command - show error and usage
+        echo "Error: Unknown command: $1"
+        echo ""
+        usage
+        ;;
+esac
