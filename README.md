@@ -1,45 +1,151 @@
-# CRG-ANL: Constitutional Runtime Governance for AI-Native Learning
+# CRG-ANL: Start Here
 
-**Contract ID:** CRGB-BC-001  
-**Status:** ACTIVE — Phase 1 Data Collection Ready  
-**Last Updated:** 2026-07-13
+**This is the fastest way to begin using CRG-ANL.** If you want everything else, read the rest of this file. You can also skip directly to what matters for your goal below.
 
 ---
 
-## What This Repository Is
+## 🚀 One-Minute Entry Points
 
-This repository is a **scientific operating system** — a canonical research environment from which software, datasets, benchmarks, publications, and experiments originate. It is not a software project. It is not merely documentation. It is the laboratory within which the CRG-ANL Research Program operates.
-
-The repository supports:
-
-- **Reproducible longitudinal research** using researcher-as-subject methodology
-- **Constitutional Runtime Governance** theory development and validation
-- **Cognitive Safety** measurement and intervention design
-- **Benchmark engineering** for AI-native educational systems
-- **AI Safety research** at the intersection of learning science and governance
+| I want to... | Go here → |
+|--------------|------------|
+| **Do a research session TODAY** | [`QUICKSTART.md`](QUICKSTART.md) — 10-minute setup, copy-paste templates |
+| **Understand what this project is** | Section below: **What CRG-ANL Is** |
+| **Contribute code or docs** | [`CONTRIBUTING.md`](CONTRIBUTING.md) + this file's "How to Contribute" section |
+| **Read the scientific framework** | Start with `01_science/README.md` → then `research_program.md` |
+| **Find a specific file or pattern** | See **Quick File Search** below |
 
 ---
 
-## Scientific Mission
+## 🧭 What CRG-ANL Is (In 3 Sentences)
 
-> Develop and validate a rigorous, reproducible framework for evaluating how Constitutional Runtime Governance can protect and enhance **Cognitive Safety**, **Instructional Integrity**, **Learner Agency**, and **Human–AI Shared Responsibility** in AI-native educational environments, beginning with the Quantic MS in Artificial Intelligence Engineering as the inaugural longitudinal case study.
+CRG-ANL is a **scientific operating system** — a single repository that runs an active research program on Constitutional Runtime Governance for AI-native learning. It's not just documentation; it's the lab where theory meets practice. You can use it to:
+
+1. Run reproducible longitudinal studies with structured observation
+2. Develop and validate governance frameworks in real educational environments  
+3. Generate benchmark evidence that travels across institutions
+
+**TL;DR:** Think of it as a Jupyter Notebook for research — except everything is version-controlled, the experiments run automatically, and the results become part of the scientific record.
 
 ---
 
-## Repository Architecture
+## ⚡ Quick Start Paths (Pick One)
 
-The repository is organized into seven workstreams, each with a distinct scientific function:
+### Path A: I'm a researcher starting data collection tomorrow
+1. Open [`QUICKSTART.md`](QUICKSTART.md) → read the "Tonight" section  
+2. Copy the **file naming conventions** into your notebook  
+3. Run `bin/research-cockpit.sh` to set up your environment  
+
+### Path B: I want to understand the science first
+1. Read [`01_science/README.md`](01_science/README.md) — it has a clear roadmap
+2. Then open `research_program.md` for mission, vision, and scope  
+3. Use this **Glossary** (below) when you encounter technical terms
+
+### Path C: I'm here to contribute
+1. Read [`CONTRIBUTING.md`](CONTRIBUTING.md) — it's short and specific
+2. Check the **Active Issues** section below for where help is needed  
+3. All contributions require production-quality documentation (see `07_project_operations/`)
+
+### Path D: I just want to know what's in this repo
+- This file: project navigation, entry points, glossary
+- `QUICKSTART.md`: operational instructions for sessions
+- `01_science/*`: canonical scientific knowledge  
+- `02_engineering/*`: reference implementation (architecture, code)
+- `03_evidence/*`: research data and observations
+- `04_literature/*`: external papers and reading maps
+- `05_experiments/*`: pilot protocols and analysis templates  
+- `06_publications/*`: publication pipeline
+- `07_project_operations/*`: lab management
+
+---
+
+## 📚 What CRG-ANL Is (Full Version)
+
+### The Scientific Mission
+
+> Develop and validate a rigorous, reproducible framework for evaluating how **Constitutional Runtime Governance** protects and enhances:
+> - **Cognitive Safety** — protecting learner attention, working memory, and emotional equilibrium  
+> - **Instructional Integrity** — ensuring AI actions are accurate and coherent  
+> - **Learner Agency** — enabling learners to set and revise their own goals  
+> - **Human–AI Shared Responsibility** — negotiating appropriate delegation between human and AI
+
+### How This Repository Operates
+
+CRG-ANL is organized into seven workstreams. Each has a distinct scientific function:
+
+| Workstream | Purpose | Key Files |
+|------------|---------|-----------|
+| **01_science** | Canonical scientific knowledge (constructs, taxonomy, glossary) | `research_program.md`, `construct_definitions.md` |
+| **02_engineering** | Reference implementation design (architecture, engine, instrumentation) | `architecture/README.md`, `instrumentation/crg_session.py` |
+| **03_evidence** | Canonical research evidence (observations, coded events, datasets) | `observations/baselines/`, `coded_events/` |
+| **04_literature** | External scientific knowledge (papers, annotated bibliography) | `annotated_bibliography/`, `reading_maps/` |
+| **05_experiments** | Executable science (pilot protocols, analysis templates) | `pilot_001/protocol.md`, `analysis/README.md` |
+| **06_publications** | Publication pipeline (papers, figures, supplementary materials) | `papers/`, `figures/` |
+| **07_project_operations** | Laboratory management (decision log, governance, meeting notes) | `decision_log.md`, `governance.md` |
+
+**The research loop:** Science → Engineering → Evidence → Experiments → Publications  
+*(Literature informs science; operations support all workstreams)*
+
+---
+
+## 🗂️ Quick File Search
+
+### You're looking for...
+
+| What you need | Where to find it |
+|---------------|------------------|
+| **How to run a session** (pre → learning → post) | [`QUICKSTART.md`](QUICKSTART.md) |
+| **The full benchmark taxonomy** (all constructs, dimensions, measurement approaches) | `01_science/benchmark_taxonomy.md` |
+| **Copy-paste observation templates** | `05_experiments/pilot_001/session_templates/` |
+| **File naming conventions** | First section of [`QUICKSTART.md`](QUICKSTART.md) |
+| **Git commit workflow** | Second section of [`QUICKSTART.md`](QUICKSTART.md) |
+| **Researcher-as-Subject methodology** | `01_science/research_program.md` → "Methodology" section |
+| **Active issues needing help** | This file's **"Where I Can Help"** section (below) |
+
+---
+
+## 🧠 Core Constructs & Glossary
+
+### The Big Four (plus three more)
+
+These are the canonical constructs under study:
+
+1. **Constitutional Runtime Governance** — principled behavioral constraints applied dynamically during runtime, not just as static filters or post-hoc audits
+2. **Cognitive Safety** — protecting cognitive resources from harm caused by AI-mediated design
+3. **Instructional Integrity** — ensuring instructional actions are accurate and coherent with learning objectives  
+4. **Learner Agency** — capacity to set, pursue, and revise own learning goals within an AI-native environment
+
+Additional constructs: Human–AI Shared Responsibility, Transition Integrity, Runtime Intervention, Learner Cockpit, Persistent Runtime Governance Window, Governance Benchmark, Researcher-as-Subject.
+
+**Full definitions:** See [`01_science/construct_definitions.md`](01_science/construct_definitions.md) (includes theoretical motivation and example observations).
+
+### Quick Glossary of Common Terms
+
+| Term | Simple definition |
+|------|-------------------|
+| **Constitutional Runtime Governance (CRG)** | A governance model where "constitution" (principles) is applied dynamically during runtime |
+| **Cognitive Safety** | Protecting attention, working memory, executive function, emotional equilibrium |
+| **Instructional Integrity** | AI actions are accurate, coherent, consistent with learning objectives |
+| **Learner Agency** | Learners can set and revise their own goals within the system |
+| **Human–AI Shared Responsibility** | Negotiated distribution of cognitive labor between human and AI |
+| **Runtime Intervention** | Real-time action to restore safe/effective learning after a violation or risk |
+| **Learner Cockpit** | Persistent interface element showing AI system state, confidence, limitations |
+| **Governance Benchmark** | Reproducible instrument measuring adherence to CRG principles |
+
+---
+
+## 🏗️ Repository Structure (Visual Overview)
 
 ```mermaid
 graph TB
     ROOT["CRG-ANL Scientific Operating System"]
-    ROOT --> S["01_science<br/>Canonical Scientific Knowledge"]
-    ROOT --> E["02_engineering<br/>Reference Implementation Design"]
-    ROOT --> V["03_evidence<br/>Canonical Research Evidence"]
-    ROOT --> L["04_literature<br/>External Scientific Knowledge"]
+    
+    ROOT --> S["01_science<br/>Canonical Knowledge"]
+    ROOT --> E["02_engineering<br/>Implementation Design"]
+    ROOT --> V["03_evidence<br/>Research Evidence"]
+    ROOT --> L["04_literature<br/>External Knowledge"]
     ROOT --> X["05_experiments<br/>Executable Science"]
     ROOT --> P["06_publications<br/>Publication Pipeline"]
-    ROOT --> O["07_project_operations<br/>Laboratory Management"]
+    ROOT --> O["07_project_operations<br/>Lab Management"]
 
     S --> E
     E --> X
@@ -49,175 +155,78 @@ graph TB
     O -.-> S
     O -.-> E
     O -.-> X
-    O -.-> P
 ```
 
-| Workstream | Purpose | Status |
-|------------|---------|--------|
-| **01_science** | Canonical scientific knowledge — research program, constructs, taxonomy, glossary | Foundation complete |
-| **02_engineering** | Reference implementation design — architecture, engine, instrumentation, schemas | Design complete |
-| **03_evidence** | Canonical research evidence — observations, coded events, field notes, datasets | Awaiting Phase 1 data |
-| **04_literature** | External scientific knowledge — papers, annotated bibliography, reading maps | Population in progress |
-| **05_experiments** | Executable science — pilot protocols, analysis templates, colab notebooks | Pilot 001 protocol ready |
-| **06_publications** | Publication pipeline — papers, figures, tables, supplementary materials | Awaiting evidence |
-| **07_project_operations** | Laboratory management — decision log, change log, meeting notes, governance | Active |
+**How to navigate:** Each directory has a `README.md` explaining its purpose, inputs, outputs, and ownership. Start there before diving into details.
 
 ---
 
-## Start Research Now
+## 📊 Pilot Study Status
 
-### If you are beginning data collection TODAY
+| Pilot | Title | Status | Next Step |
+|-------|-------|--------|-----------|
+| **Pilot 001** | Quantic Longitudinal Researcher-as-Subject | Protocol ready — awaiting first session | Next Quantic course enrollment |
+| **Pilot 002** | Cross-platform validation | Planned | TBD |
 
-**→ Open [`QUICKSTART.md`](QUICKSTART.md) and follow it minute-by-minute.**
-
-This is your operational entry point. It contains:
-- Tonight's 10-minute setup
-- Tomorrow's session timeline (pre-session → learning → post-session)
-- Copy-paste templates for every artifact
-- File naming conventions
-- Git commit workflow
-- Troubleshooting for common problems
-
-### If you want to understand the research program first
-
-1. Read `01_science/research_program.md` for mission, vision, themes, and scope
-2. Read `01_science/student_experience_model.md` for the SX construct model
-3. Read `01_science/construct_definitions.md` for the canonical construct ontology
-4. Read `01_science/benchmark_taxonomy.md` for the evaluation hierarchy
-5. Read `BUILD_CONTRACTS.md` for the full development roadmap
-
-### If you want to contribute to the repository
-
-1. Read `CONTRIBUTING.md` for contribution guidelines
-2. Review `07_project_operations/decision_log.md` for established architectural decisions
-3. All contributions must include production-quality documentation
+See [`05_experiments/pilot_001/README.md`](05_experiments/pilot_001/README.md) for the complete protocol.
 
 ---
 
-## Core Constructs
+## 🧩 Where I Can Help (Active Issues)
 
-The research program is built on a rigorously defined set of constructs:
+If you'd like to contribute, here's where your help is needed right now:
 
-| Construct | Definition | Status |
-|-----------|-----------|--------|
-| **Constitutional Runtime Governance** | A governance model in which principled behavioral constraints (a "constitution") are applied to AI systems dynamically during runtime, not merely as static pre-deployment filters or post-hoc audits | Canonical |
-| **Cognitive Safety** | The protection of a learner's cognitive resources — attention, working memory, executive function, metacognitive capacity, and emotional equilibrium — from harm caused by AI-mediated instructional design | Canonical |
-| **Instructional Integrity** | The property of an AI-native educational system whereby its instructional actions — content generation, scaffolding, assessment, feedback, navigation, and transitions — are accurate, coherent, consistent, and aligned with stated learning objectives | Canonical |
-| **Learner Agency** | The capacity of a learner to set, pursue, and revise their own learning goals, strategies, and evaluative standards within an AI-native educational environment | Canonical |
-| **Human–AI Shared Responsibility** | The negotiated distribution of cognitive, epistemic, and instructional labor between human learner and AI system, characterized by appropriate delegation, oversight, and mutual accountability | Canonical |
-| **Transition Integrity** | The preservation of cognitive continuity, epistemic orientation, and learner agency during transitions between instructional states — lessons, topics, difficulty levels, modalities, or human–AI responsibility distributions | Canonical |
-| **Runtime Intervention** | An action triggered in real time by the detection of a governance violation, cognitive safety risk, or instructional integrity failure, designed to restore safe and effective learning conditions | Canonical |
-| **Learner Cockpit** | A persistent, learner-visible interface element that displays real-time information about the AI system's state, confidence, limitations, and governance status, enabling informed oversight and agency | Canonical |
-| **Persistent Runtime Governance Window** | The continuous temporal scope within which Constitutional Runtime Governance operates — from the initiation of a learning session through all instructional transitions to session conclusion — ensuring no ungoverned instructional interval | Canonical |
-| **Governance Benchmark** | A reproducible, standardized measurement instrument designed to evaluate the extent to which an AI-native educational system adheres to Constitutional Runtime Governance principles across defined dimensions | Canonical |
-| **Researcher-as-Subject** | A methodological framework in which the researcher systematically studies their own learning experience within an AI-native educational environment, using structured observation, validated instruments, and rigorous analytical protocols | Canonical |
+| Area | What's needed | Starting point |
+|------|---------------|----------------|
+| **Data collection** | First baseline session for Pilot 001 | [`QUICKSTART.md`](QUICKSTART.md) + `pilot_001/protocol.md` |
+| **Documentation** | Translate key sections into Spanish and Mandarin | Any `.md` file in the repo |
+| **Code review** | Review instrumentation PRs for clarity | GitHub pull requests on this repo |
+| **Literature mapping** | Annotate 2–3 relevant papers per week | `04_literature/annotated_bibliography/README.md` |
+| **Test reading** | Proofread all `.md` files for clarity and accessibility | Start with this file (you're here!) |
 
-Full construct definitions with theoretical motivation, relationships, example observations, and future benchmark dimensions are available in `01_science/construct_definitions.md`.
+**No prior experience needed.** Just read the section you want to help with, then ask a question in `07_project_operations/meeting_notes.md`.
 
 ---
 
-## Benchmark Taxonomy
+## 🔗 External Resources & Links
 
-The evaluation hierarchy is organized as follows:
+- **CRG-ANL GitHub:** https://github.com/CRGSLab/crg-anl  
+- **Contract ID:** CRGB-BC-001 (Active — Phase 1 Data Collection Ready)  
+- **Last major update:** July 27, 2026  
 
-```mermaid
-graph TD
-    CRG["Constitutional Runtime Governance"]
-
-    CRG --> CS["Cognitive Safety"]
-    CRG --> II["Instructional Integrity"]
-    CRG --> LA["Learner Agency"]
-    CRG --> HSR["Human–AI Shared Responsibility"]
-    CRG --> TI["Transition Integrity"]
-
-    CS --> CO["Cognitive Overload"]
-    CS --> CF["Confusion & Frustration"]
-    CS --> ES["Emotional Safety"]
-    CS --> AT["Attention Threats"]
-    CS --> MF["Metacognitive Failure"]
-
-    II --> AI["Assessment Integrity"]
-    II --> SI["Scaffolding Integrity"]
-    II --> NI["Navigation Integrity"]
-    II --> TI2["Transition Integrity"]
-    II --> FI["Feedback Integrity"]
-    II --> ACI["Accessibility Integrity"]
-
-    AI --> AC["Accuracy"]
-    AI --> CO2["Consistency"]
-    AI --> AD["Appropriate Difficulty"]
-
-    SI --> CR["Correctness"]
-    SI --> CM["Completeness"]
-    SI --> CT["Clarity"]
-    SI --> PC["Pedagogical Coherence"]
-```
-
-The full taxonomy with operational definitions, measurement approaches, and severity classifications is available in `01_science/benchmark_taxonomy.md`.
-
----
-
-## Pilot Study Status
-
-| Pilot | Title | Status | Target Start |
-|-------|-------|--------|-------------|
-| **Pilot 001** | Quantic Longitudinal Researcher-as-Subject Pilot | Protocol ready — awaiting first session | Next Quantic course |
-| **Pilot 002** | [Reserved for cross-platform validation] | Planned | TBD |
-
-See `05_experiments/pilot_001/` for the complete protocol.
-
----
-
-## Artifact Status
-
-Artifacts in this repository are labeled with their maturity status:
-
-| Status | Meaning | Example |
-|--------|---------|---------|
-| **Draft vX.Y** | Complete as a draft; content is structurally sound but subject to refinement through pilot evidence | Most v0.1.0 artifacts at launch |
-| **Under Review** | Undergoing peer or self-review; may change significantly | Post-pilot construct revisions |
-| **Stable vX.Y** | Mature; changes require formal decision record | Post-validation benchmark taxonomy |
-| **Superseded** | Replaced by a newer version; retained for traceability | Old schema versions |
-
-All Draft artifacts include an explicit **Known Limitations** section documenting what is provisional, what evidence is needed to mature the artifact, and what changes are anticipated.
-
-## Engineering Standards
-
-All artifacts in this repository conform to the following standards:
-
-| Standard | Application |
-|----------|-------------|
-| **Markdown** | All documentation, notes, and reports |
-| **YAML** | All schemas, configuration, and machine-readable metadata |
-| **Mermaid** | All diagrams and visual representations |
-| **Git** | Version-controlled science with meaningful commit messages |
-| **Semantic line breaks** | One sentence per line in Markdown for clean diffs |
-
-Every directory contains a `README.md` describing: **purpose**, **relationships**, **inputs**, **outputs**, and **ownership**.
-
----
-
-## Citation
-
-If referencing this research program or its artifacts:
-
+**Citation format** (BibTeX):
 ```bibtex
 @software{crg_anl_2026,
   title = {CRG-ANL: Constitutional Runtime Governance for AI-Native Learning},
   subtitle = {Scientific Operating System},
   author = {{CRG-ANL Research Program}},
   year = {2026},
-  url = {https://github.com/YOUR_ORG/crg-anl},
+  url = {https://github.com/CRGSLab/crg-anl},
   note = {Contract CRGB-BC-001}
 }
 ```
 
 ---
 
-## License
+## 📝 License & Code of Conduct
 
-This research program is released under the **MIT License** to maximize accessibility and encourage adoption by the research community. See `LICENSE` for details. Research data and publications may be subject to separate licensing terms specified in their respective directories.
+This research program is released under the **MIT License** to maximize accessibility. See [`LICENSE`](LICENSE) for details. Research data and publications may have separate terms.
+
+All contributors agree to:
+- Read and follow `CONTRIBUTING.md` before making changes  
+- Include production-quality documentation with every contribution  
+- Respect privacy and ethical standards per `07_project_operations/ethics_protocol.md`  
 
 ---
 
-*The Quantic curriculum is the experimental environment. The true object of study is a new generation of AI-native educational systems and how they can be systematically evaluated, governed, and improved for learners with diverse cognitive profiles.*
+## 🎯 End of Quick Start Guide
+
+**You've now seen:**
+1. How to start a research session TODAY (QUICKSTART.md)  
+2. What CRG-ANL is and its scientific mission  
+3. The seven workstreams and where to find information  
+4. Where you can contribute help right now  
+
+**Next step:** Pick one path from the "Quick Start Paths" table above and follow it. If you get stuck, come back here and use **Quick File Search**.
+
+*The Quantic curriculum is the experimental environment. The true object of study is a new generation of AI-native educational systems.*
