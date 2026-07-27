@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRG Research Forms - Prototype</title>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-form: #0f0f23;
+      --text-primary: #e8e8e8;
+      --text-secondary: #b0b0c0;
+      --accent: #4ecca3;
+      --accent-hover: #45b392;
+      --border: #2d3748;
+      --input-bg: #1a1a2e;
+      --error: #ff6b6b;
+      --warning: #ffd93d;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      padding: 30px 0;
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+      border-bottom: 2px solid var(--accent);
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    header p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+    }
+
+    .form-nav {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .nav-btn {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 20px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .nav-btn:hover {
+      background: var(--bg-form);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .nav-btn.active {
+      background: var(--accent);
+      color: var(--bg-primary);
+      font-weight: 600;
+    }
+
+    .form-container {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .form-container.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-section {
+      background: var(--bg-form);
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      color: var(--accent);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    label span.required {
+      color: var(--error);
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px 15px;
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-primary);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(78, 204, 163, 0.2);
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+    }
+
+    .scale-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-top: 5px;
+    }
+
+    .checkbox-group, .radio-group {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .checkbox-item, .radio-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--input-bg);
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .checkbox-item:hover, .radio-item:hover {
+      background: #2a2a4e;
+    }
+
+    input[type="checkbox"], input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent);
+    }
+
+    .error-message {
+      color: var(--error);
+      font-size: 0.85rem;
+      margin-top: 5px;
+      display: none;
+    }
+
+    .conditional-field {
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-10px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .submit-btn, .back-btn {
+      padding: 14px 25px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+    }
+
+    .submit-btn {
+      background: var(--accent);
+      color: var(--bg-primary);
+      float: right;
+    }
+
+    .submit-btn:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+
+    .back-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      float: left;
+      margin-top: 14px;
+    }
+
+    .back-btn:hover {
+      background: var(--bg-secondary);
+    }
+
+    .success-message {
+      display: none;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #1e5c4a;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+
+    .quick-tips {
+      background: var(--bg-secondary);
+      border-left: 3px solid var(--accent);
+      padding: 15px 20px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+    }
+
+    .quick-tips h4 {
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .quick-tips ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .quick-tips li {
+      position: relative;
+      padding-left: 25px;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .quick-tips li:before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.5rem; }
+      .form-nav { grid-template-columns: 1fr; }
+      .container { padding: 15px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🧪 CRG Research Forms</h1>
+    <p>Complete your research observations in under 30 seconds per event</p>
+  </header>
+
+  <div class="container">
+    <div id="quickTips" class="quick-tips">
+      <h4>💡 Quick Tips for Easy Data Entry:</h4>
+      <ul>
+        <li><strong>Event Logger:</strong> Designed to be filled in under 30 seconds - just the essential fields you need</li>
+        <li><strong>Safety Trigger:</strong> Tap "Safety" → Safety questions automatically appear below</li>
+        <li><strong>Screenshot?</strong> Check "Yes" → Screenshot filename field slides in smoothly</li>
+        <li><strong>Breakdown observed?</strong> Severity will auto-minimize to 3 or higher (can't be lower)</li>
+        <li><strong>All forms:</strong> Click the form buttons below to switch between them</li>
+      </ul>
+    </div>
+
+    <form id="crgForm" novalidate>
+      <!-- Form Navigation -->
+      <nav class="form-nav">
+        <button type="button" class="nav-btn active" data-form="session-intake">
+          📋 Session Intake<br><small>(2-4 min)</small>
+        </button>
+        <button type="button" class="nav-btn" data-form="event-logger">
+          🔍 Event Logger<br><small>(<30 sec/event)</small>
+        </button>
+        <button type="button" class="nav-btn" data-form="post-session">
+          📊 Post-Session Assessment<br><small>(8-10 min)</small>
+        </button>
+        <button type="button" class="nav-btn" data-form="weekly-review">
+          🗓️ Weekly Review<br><small>(15-20 min)</small>
+        </button>
+      </nav>
+
+      <!-- Form 1: Session Intake -->
+      <div id="session-intake" class="form-container active">
+        <h2 style="color: var(--accent); margin-bottom: 20px;">Session Intake Form</h2>
+        
+        <div class="form-section">
+          <h3 class="section-title">📝 Section 1: Metadata</h3>
+          
+          <div class="form-group">
+            <label>Email <span class="required">*</span></label>
+            <input type="email" name="email" placeholder="your.email@example.com" required>
+          </div>
+
+          <div class="form-group">
+            <label>Session ID</label>
+            <input type="text" name="session_id" id="intake-session-id" placeholder="Will auto-generate if empty">
+            <small style="color: var(--accent);">Leave blank to auto-generate (e.g., pilot001-session-20260727)</small>
+          </div>
+
+          <div class="form-group">
+            <label>Study</label>
+            <select name="study" id="intake-study">
+              <option value="pilot_001">Pilot 001</option>
+              <option value="pilot_002">Pilot 002</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Course / Lesson</label>
+            <input type="text" name="course_lesson" placeholder="e.g., AI Engineering - Module 3, Lesson 7" id="intake-course-lesson">
+          </div>
+
+          <div class="form-group">
+            <label>Device Used</label>
+            <select name="device" required>
+              <option value="">— Select Device —</option>
+              <option value="Desktop">Desktop</option>
+              <option value="Laptop">Laptop</option>
+              <option value="Tablet">Tablet</option>
+              <option value="Mobile">Mobile</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Location / Environment Description</label>
+            <input type="text" name="location" placeholder="e.g., Home office, quiet room, natural light">
+          </div>
+
+          <div class="form-group">
+            <label>Time Available (minutes)</label>
+            <input type="number" name="time_available" min="5" max="180" required>
+          </div>
+
+          <div class="form-group">
+            <label>Network Quality (1 = Stable, 3 = Poor) <span class="required">*</span></label>
+            <input type="range" name="network" min="1" max="3" value="2" required oninput="document.getElementById('network-val').textContent = this.value">
+            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-secondary); margin-top: 5px;">
+              <span>1 - Stable</span>
+              <span id="network-val" style="color: var(--accent); font-weight: bold;">2</span>
+              <span>3 - Poor</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3 class="section-title">📊 Section 2: Baseline (1-7 scale)</h3>
+          
+          <div style="margin-bottom: 20px;">
+            <label>Energy Level</label>
+            <input type="range" name="energy" min="1" max="7" value="4" required oninput="updateScaleLabel(this, 'Energy')">
+            <span id="scale-energy-1">1 - Exhausted</span> | 
+            <span id="scale-energy-2">7 - Highly energized</span>
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            <label>Stress Level</label>
+            <input type="range" name="stress" min="1" max="7" value="4" required oninput="updateScaleLabel(this, 'Stress')">
+            <span id="scale-stress-1">1 - Completely calm</span> | 
+            <span id="scale-stress-2">7 - Highly stressed</span>
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            <label>Motivation</label>
+            <input type="range" name="motivation" min="1" max="7" value="4" required oninput="updateScaleLabel(this, 'Motivation')">
+            <span id="scale-motivation-1">1 - Unwilling</span> | 
+            <span id="scale-motivation-2">7 - Highly motivated</span>
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            <label>Prior Knowledge (today's topic)</label>
+            <input type="range" name="prior_knowledge" min="1" max="7" value="4" required oninput="updateScaleLabel(this, 'Prior Knowledge')">
+            <span id="scale-knowledge-1">1 - Completely new</span> | 
+            <span id="scale-knowledge-2">7 - Expert</span>
+          </div>
+
+          <div class="form-group">
+            <label>Sleep Hours (last night)</label>
+            <input type="number" name="sleep_hours" min="0" max="12" placeholder="e.g., 6.5">
+          </div>
+
+          <div class="form-group">
+            <label>Medication Today</label>
+            <select name="medication">
+              <option value="">— Select —</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+              <option value="prefer_not_say">Prefer not to say</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Caffeine (mg, approximate)</label>
+            <input type="number" name="caffeine" placeholder="e.g., 200 or leave blank if unknown">
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3 class="section-title">🎯 Section 3: Learning Goals</h3>
+          
+          <div class="form-group">
+            <label>Goal 1 (required)</label>
+            <textarea name="goal_1" placeholder="What do you want to learn or accomplish today?" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Goal 2</label>
+            <textarea name="goal_2" placeholder="Additional learning objective..." rows="3"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Goal 3</label>
+            <textarea name="goal_3" placeholder="Another goal if needed..." rows="3"></textarea>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3 class="section-title">✅ Section 4: Preparedness Check</h3>
+          
+          <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <input type="checkbox" name="prepared" required>
+            <span>I have the repository open and ready</span>
+          </label>
+
+          <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <input type="checkbox" name="windows_ready">
+            <span>All my windows / tools are prepared</span>
+          </label>
+
+          <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <input type="checkbox" name="lesson_selected">
+            <span>The lesson is selected and I'm ready to begin</span>
+          </label>
+
+          <div style="text-align: right; margin-top: 20px;">
+            <button type="submit" class="submit-btn">Submit Session Intake →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form 2: Event Logger -->
+      <div id="event-logger" class="form-container">
+        <h2 style="color: var(--accent); margin-bottom: 20px;">Event Logger - Fast Data Entry</h2>
+        
+        <div class="quick-tips">
+          <h4>⚡ Keep it fast:</h4>
+          <ul>
+            <li>This form is designed for under 30 seconds per event</li>
+            <li>Only the essential fields appear - no distractions</li>
+            <li>Submit and start a new observation immediately after</li>
+          </ul>
+        </div>
+
+        <div class="form-section">
+          <h3 class="section-title">🔍 Observation Details</h3>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+            <div class="form-group">
+              <label>Session ID (auto-filled)</label>
+              <input type="text" name="session_id" id="logger-session-id" readonly style="background: var(--bg-secondary); color: var(--accent);">
+            </div>
+
+            <div class="form-group">
+              <label>Observation Number</label>
+              <input type="text" name="observation_number" id="logger-obs-num" placeholder="e.g., 001">
+              <small style="color: var(--accent);">Auto-increments per session in real app</small>
+            </div>
+
+            <div class="form-group">
+              <label>Trigger (what caused this?) <span class="required">*</span></label>
+              <select name="trigger" required onchange="checkSafetyTrigger(this)">
+                <option value="">— Select Trigger —</option>
+                <option value="confusion_60s">Confusion > 60 seconds</option>
+                <option value="ai_explanation">AI gave an explanation</option>
+                <option value="transition">Lesson transition</option>
+                <option value="quiz">Quiz / assessment</option>
+                <option value="emotion">Emotion (frustration, joy, surprise)</option>
+                <option value="safety" onchange="showSafetyQuestions()">SAFETY TRIGGER ⚠️</option>
+                <option value="help_requested">Help was requested</option>
+                <option value="other">Other</option>
+              </select>
+
+              <!-- Safety sub-questions (hidden by default) -->
+              <div id="safety-section" style="display: none; margin-top: 15px; padding: 15px; background: var(--bg-secondary); border-radius: 8px; border-left: 3px solid var(--error);">
+                <h4 style="color: var(--error); margin-bottom: 10px;">🛡️ Safety Questions</h4>
+                
+                <div class="form-group">
+                  <label>Safety Type</label>
+                  <select name="safety_type" id="safety-type">
+                    <option value="">— Select —</option>
+                    <option value="misinformation">Misinformation / hallucination</option>
+                    <option value="bias">Bias or unfair treatment</option>
+                    <option value="privacy">Privacy concern</option>
+                    <option value="harmful_content">Harmful content generated</option>
+                    <option value="system_failure">System failure / crash</option>
+                    <option value="other_safety">Other safety issue</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Immediate Action Taken</label>
+                  <textarea name="safety_action" placeholder="What did you do? (e.g., reported to instructor, took screenshot)" rows="2"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Observation Type <span class="required">*</span></label>
+              <select name="observation_type" required onchange="checkBreakdownType(this)">
+                <option value="">— Select Type —</option>
+                <option value="confusion">Confusion / unclear instructions</option>
+                <option value="success">Success / breakthrough moment</option>
+                <option value="friction">Friction / difficulty</option>
+                <option value="surprise">Surprise (unexpected behavior)</option>
+                <option value="flow">Flow state / optimal experience</option>
+                <option value="trust">Trust in the system</option>
+                <option value="breakdown" onchange="setSeverityMin(3)">BREAKDOWN ⚠️</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Taken Screenshot?</label>
+              <div style="display: flex; gap: 10px;">
+                <label class="radio-item" style="flex: 1;">
+                  <input type="radio" name="screenshot_taken" value="no" checked onchange="toggleScreenshotField()">
+                  No
+                </label>
+                <label class="radio-item" style="flex: 1;">
+                  <input type="radio" name="screenshot_taken" value="yes" onchange="toggleScreenshotField()">
+                  Yes
+                </label>
+              </div>
+
+              <!-- Screenshot filename field (hidden by default) -->
+              <div id="screenshot-field" style="display: none; margin-top: 10px;">
+                <label>Screenshot Filename</label>
+                <input type="text" name="screenshot_filename" placeholder="e.g., screenshot_2026-07-24_TRIAL.png">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>What happened? (short)</label>
+            <input type="text" name="description_short" id="logger-desc-short" maxlength="200" placeholder="e.g., AI gave wrong answer to math question" style="margin-bottom: 10px;">
+          </div>
+
+          <div class="form-group">
+            <label>What were you trying to do? (context)</label>
+            <textarea name="context" id="logger-context" rows="2" placeholder="e.g., I was working on Exercise 3.2 about gradient descent"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>What did the system / AI do?</label>
+            <textarea name="system_response" id="logger-system-response" rows="3" placeholder="e.g., The AI confidently stated the wrong formula and explained why"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Your reaction (feelings / thoughts)</label>
+            <textarea name="reaction" id="logger-reaction" rows="2" placeholder="e.g., I was confused but didn't interrupt - kept going anyway"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Primary Construct (category)</label>
+            <select name="primary_construct" required>
+              <option value="">— Select Construct —</option>
+              <option value="C2-Cognitive-Safety">Cognitive Safety</option>
+              <option value="C3-Instructional-Integrity">Instructional Integrity</option>
+              <option value="C4-Learner-Agency">Learner Agency</option>
+              <option value="C5-Shared-Responsibility">Shared Responsibility</option>
+              <option value="C6-Transition-Integrity">Transition Integrity</option>
+              <option value="C1-CRG">Constitutional Runtime Governance (CRG)</option>
+              <option value="C10-Governance-Window">Governance Window</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-top: 15px;">
+            <label>Severity (1 = minor, 5 = critical)</label>
+            <input type="range" name="severity" min="1" max="5" value="2" required oninput="document.getElementById('severity-val').textContent = this.value">
+            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-secondary); margin-top: 5px;">
+              <span>1 - Minor</span>
+              <span id="severity-val" style="color: var(--accent); font-weight: bold;">2</span>
+              <span>5 - Critical</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Your confidence in this observation (1-5)</label>
+            <input type="range" name="observer_confidence" min="1" max="5" value="3">
+          </div>
+        </div>
+
+        <div style="text-align: right; margin-top: 20px;">
+          <button type="submit" class="submit-btn">Submit Observation →</button>
+        </div>
+      </div>
+
+      <!-- Form 3: Post-Session Assessment -->
+      <div id="post-session" class="form-container">
+        <h2 style="color: var(--accent); margin-bottom: 20px;">Post-Session Assessment</h2>
+        
+        <div class="quick-tips">
+          <h4>📊 Take your time:</h4>
+          <ul>
+            <li>This form takes about 8-10 minutes to complete thoughtfully</li>
+            <li>All fields are important for analysis - don't skip them</li>
+            <li>Be honest about what you experienced (even the negative stuff)</li>
+          </ul>
+        </div>
+
+        <!-- NASA-TLX Section -->
+        <div class="form-section">
+          <h3 class="section-title">🚀 NASA-TLX: Workload Assessment</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 15px;">Rate each dimension from 0 (very low) to 100 (very high)</p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
+            <div class="form-group">
+              <label>Mental Demand</label>
+              <input type="range" name="nasa_mental_demand" min="0" max="100" value="50" required oninput="document.getElementById('nasa-mental-val').textContent = this.value">
+              <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px;">
+                <span>Very low</span>
+                <span id="nasa-mental-val" style="color: var(--accent);">50</span>
+                <span>Very high</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Physical Demand</label>
+              <input type="range" name="nasa_physical_demand" min="0" max="100" value="20" required oninput="document.getElementById('nasa-physical-val').textContent = this.value">
+              <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px;">
+                <span>Very low</span>
+                <span id="nasa-physical-val" style="color: var(--accent);">20</span>
+                <span>Very high</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Temporal Demand (time pressure)</label>
+              <input type="range" name="nasa_temporal_demand" min="0" max="100" value="45" required oninput="document.getElementById('nasa-temporal-val').textContent = this.value">
+              <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px;">
+                <span>Very low</span>
+                <span id="nasa-temporal-val" style="color: var(--accent);">45</span>
+                <span>Very high</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Performance (0 = perfect, 100 = failure)</label>
+              <input type="range" name="nasa_performance" min="0" max="100" value="25" required oninput="document.getElementById('nasa-perf-val').textContent = this.value">
+              <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px;">
+                <span>Perfect</span>
+                <span id="nasa-perf-val" style="color: var(--accent);">25</span>
+                <span>Failure</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Effort</label>
+              <input type="range" name="nasa_effort" min="0" max="100" value="40" required oninput="document.getElementById('nasa-effort-val').textContent = this.value">
+              <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px;">
+                <span>Very low</span>
+                <span id="nasa-effort-val" style="color: var(--accent);">40</span>
+                <span>Very high</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Frustration</label>
+              <input type="range" name="nasa_frustration" min="0" max="100" value="35" required oninput="document.getElementById('nasa-frustration-val').textContent = this.value">
+              <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px;">
+                <span>Very low</span>
+                <span id="nasa-frustration-val" style="color: var(--accent);">35</span>
+                <span>Very high</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subjective Scales Section -->
+        <div class="form-section">
+          <h3 class="section-title">📏 Subjective Scales (1-7)</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 15px;">Rate each statement from 1 (strongly disagree) to 7 (strongly agree)</p>
+
+          <div style="display: grid; gap: 10px;">
+            <label style="display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: var(--input-bg); border-radius: 6px;">
+              <span>S1. I knew what I was supposed to be learning</span>
+              <select name="sub_S1" style="width: auto; min-width: 100px;">
+                <option value="">— —</option>
+                <option value="1">1 - Strongly disagree</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4" selected>4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7 - Strongly agree</option>
+              </select>
+            </label>
+
+            <label style="display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: var(--input-bg); border-radius: 6px;">
+              <span>S2. Content was at the right difficulty</span>
+              <select name="sub_S2" style="width: auto; min-width: 100px;">
+                <option value="">— —</option>
+                <option value="1">1 - Strongly disagree</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4" selected>4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7 - Strongly agree</option>
+              </select>
+            </label>
+
+            <label style="display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: var(--input-bg); border-radius: 6px;">
+              <span>S3. I felt overwhelmed</span>
+              <select name="sub_S3" style="width: auto; min-width: 100px;">
+                <option value="">— —</option>
+                <option value="1">1 - Strongly disagree</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4" selected>4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7 - Strongly agree</option>
+              </select>
+            </label>
+
+            <label style="display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: var(--input-bg); border-radius: 6px;">
+              <span>S4. I trust AI tutor explanations</span>
+              <select name="sub_S4" style="width: auto; min-width: 100px;">
+                <option value="">— —</option>
+                <option value="1">1 - Strongly disagree</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4" selected>4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7 - Strongly agree</option>
+              </select>
+            </label>
+
+            <label style="display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: var(--input-bg); border-radius: 6px;">
+              <span>S5. I had control over the learning path</span>
+              <select name="sub_S5" style="width: auto; min-width: 100px;">
+                <option value="">— —</option>
+                <option value="1">1 - Strongly disagree</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4" selected>4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7 - Strongly agree</option>
+              </select>
+            </label>
+
+            <label style="display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: var(--input-bg); border-radius: 6px;">
+              <span>S6. I felt anxious / stressed</span>
+              <select name="sub_S6" style="width: auto; min-width: 100px;">
+                <option value="">— —</option>
+                <option value="1">1 - Strongly disagree</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4" selected>4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7 - Strongly agree</option>
+              </select>
+            </label>
+
+            <label style="display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: var(--input-bg); border-radius: 6px;">
+              <span>S7. Feedback was helpful</span>
+              <select name="sub_S7" style="width: auto; min-width: 100px;">
+                <option value="">— —</option>
+                <option value="1">1 - Strongly disagree</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4" selected>4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7 - Strongly agree</option>
+              </select>
+            </label>
+
+            <label style="display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: var(--input-bg); border-radius: 6px;">
+              <span>S8. I felt confident</span>
+              <select name="sub_S8" style="width: auto; min-width: 100px;">
+                <option value="">— —</option>
+                <option value="1">1 - Strongly disagree</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4" selected>4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7 - Strongly agree</option>
+              </select>
+            </label>
+
+            <label style="display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: var(--input-bg); border-radius: 6px;">
+              <span>S9. Transitions were smooth</span>
+              <select name="sub_S9" style="width: auto; min-width: 100px;">
+                <option value="">— —</option>
+                <option value="1">1 - Strongly disagree</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4" selected>4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7 - Strongly agree</option>
+              </select>
+            </label>
+
+            <label style="display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: var(--input-bg); border-radius: 6px;">
+              <span>S10. I understood system suggestions</span>
+              <select name="sub_S10" style="width: auto; min-width: 100px;">
+                <option value="">— —</option>
+                <option value="1">1 - Strongly disagree</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4" selected>4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7 - Strongly agree</option>
+              </select>
+            </label>
+
+            <label style="display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: var(--input-bg); border-radius: 6px;">
+              <span>S11. I felt safe making mistakes</span>
+              <select name="sub_S11" style="width: auto; min-width: 100px;">
+                <option value="">— —</option>
+                <option value="1">1 - Strongly disagree</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4" selected>4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7 - Strongly agree</option>
+              </select>
+            </label>
+
+            <label style="display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: var(--input-bg); border-radius: 6px;">
+              <span>S12. This was a good use of my time</span>
+              <select name="sub_S12" style="width: auto; min-width: 100px;">
+                <option value="">— —</option>
+                <option value="1">1 - Strongly disagree</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4" selected>4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7 - Strongly agree</option>
+              </select>
+            </label>
+
+            <label style="display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: var(--input-bg); border-radius: 6px;">
+              <span>S13. I would recommend this experience</span>
+              <select name="sub_S13" style="width: auto; min-width: 100px;">
+                <option value="">— —</option>
+                <option value="1">1 - Strongly disagree</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4" selected>4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7 - Strongly agree</option>
+              </select>
+            </label>
+
+            <label style="display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: var(--input-bg); border-radius: 6px;">
+              <span>S14. I had a sense of progress</span>
+              <select name="sub_S14" style="width: auto; min-width: 100px;">
+                <option value="">— —</option>
+                <option value="1">1 - Strongly disagree</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4" selected>4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7 - Strongly agree</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <!-- Research Notes Section -->
+        <div class="form-section">
+          <h3 class="section-title">📝 Research Notes & Reflections</h3>
+          
+          <div style="display: grid; gap: 15px;">
+            <div class="form-group">
+              <label>Top confusion moments (what confused you most?)</label>
+              <textarea name="confusion_moments" placeholder="e.g., The notation in Exercise 3.2 was confusing because..." rows="4"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Momentum moments (when did you feel really engaged?)</label>
+              <textarea name="momentum_moments" placeholder="e.g., When I figured out the gradient descent visualization, it clicked..." rows="3"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Friction moments (what made things hard?)</label>
+              <textarea name="friction_moments" placeholder="e.g., The quiz came too early and I didn't have time to..." rows="3"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>What support / explanation helped most?</label>
+              <textarea name="helped_most" placeholder="e.g., When the AI tutor broke down the matrix multiplication step by step, it was perfect..." rows="3"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>What was missing or could be improved?</label>
+              <textarea name="missing" placeholder="e.g., More examples before the quiz would have helped..." rows="3"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Anxiety, frustration, or safety moments</label>
+              <textarea name="safety_moments" placeholder="e.g., I felt anxious when the system didn't explain why it gave me a wrong answer..." rows="3"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Anything unexpected or surprising?</label>
+              <textarea name="unexpected" placeholder="e.g., The AI made a joke that was completely out of place..." rows="2"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Overall Session Section -->
+        <div class="form-section">
+          <h3 class="section-title">🎯 Overall Session Assessment</h3>
+          
+          <div style="display: grid; gap: 15px;">
+            <div class="form-group">
+              <label>Overall Quality Rating (1-7)</label>
+              <input type="range" name="overall_quality" min="1" max="7" value="4" required oninput="document.getElementById('quality-val').textContent = this.value">
+              <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-secondary); margin-top: 5px;">
+                <span>1 - Poor</span>
+                <span id="quality-val" style="color: var(--accent);">4</span>
+                <span>7 - Excellent</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Would you continue with this experience?</label>
+              <select name="would_continue" required>
+                <option value="">— Select —</option>
+                <option value="yes">Yes, absolutely</option>
+                <option value="no" selected>No, I don't think so</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Session Status</label>
+              <select name="session_complete" required>
+                <option value="">— Select —</option>
+                <option value="complete">Complete - finished as planned</option>
+                <option value="ended_early" onchange="document.getElementById('early-reason').style.display = 'block'">Ended Early</option>
+              </select>
+
+              <div id="early-reason" style="display: none; margin-top: 10px;">
+                <label>If ended early, why?</label>
+                <textarea name="ended_early_reason" placeholder="e.g., Internet connection dropped, had to leave for an appointment..." rows="2"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div style="text-align: right; margin-top: 20px;">
+            <button type="submit" class="submit-btn">Submit Post-Session Assessment →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form 4: Weekly Review -->
+      <div id="weekly-review" class="form-container">
+        <h2 style="color: var(--accent); margin-bottom: 20px;">Weekly Review</h2>
+        
+        <div class="quick-tips">
+          <h4>🗓️ Weekly reflection:</h4>
+          <ul>
+            <li>This form takes about 15-20 minutes to complete thoughtfully</li>
+            <li>Review your observations from the week and identify patterns</li>
+            <li>Your reflections help improve future sessions for all learners</li>
+          </ul>
+        </div>
+
+        <div class="form-section">
+          <h3 class="section-title">📊 Session Summary This Week</h3>
+          
+          <div style="display: grid; gap: 15px;">
+            <div class="form-group">
+              <label>Week Number</label>
+              <input type="text" name="week_number" placeholder="e.g., 01" id="weekly-week-number">
+            </div>
+
+            <div class="form-group">
+              <label>Date Range (e.g., July 25 - August 1, 2026)</label>
+              <input type="text" name="date_range" placeholder="July 25 - August 1, 2026" id="weekly-date-range">
+            </div>
+
+            <div class="form-group">
+              <label>Total Sessions Completed This Week</label>
+              <input type="number" name="sessions_completed" min="0" placeholder="e.g., 3" id="weekly-sessions-completed">
+            </div>
+
+            <div class="form-group">
+              <label>Total Observations Recorded</label>
+              <input type="number" name="total_observations" min="0" placeholder="e.g., 12" id="weekly-obs-count">
+            </div>
+
+            <div class="form-group">
+              <label>Most Common Trigger (what caused most observations?)</label>
+              <select name="most_common_trigger" required id="weekly-common-trigger" onchange="updateCommonConstruct(this.value)">
+                <option value="">— Select —</option>
+                <option value="confusion_60s">Confusion > 60 seconds</option>
+                <option value="ai_explanation">AI explanation</option>
+                <option value="transition">Lesson transition</option>
+                <option value="quiz">Quiz / assessment</option>
+                <option value="emotion">Emotion (frustration, joy)</option>
+                <option value="safety" id="weekly-safety-trigger" disabled>Safety issues</option>
+                <option value="help_requested">Help requested</option>
+              </select>
+
+              <!-- Safety trigger sub-questions -->
+              <div id="weekly-safety-section" style="display: none; margin-top: 15px; padding: 15px; background: var(--bg-secondary); border-radius: 8px;">
+                <label>Safety Questions</label>
+                <textarea name="safety_pattern" placeholder="e.g., Multiple safety issues related to misinformation..." rows="2"></textarea>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Most Common Construct (primary category)</label>
+              <select name="most_common_construct" required id="weekly-common-construct" onchange="updateCommonTrigger(this.value)">
+                <option value="">— Select —</option>
+                <option value="C2-Cognitive-Safety">Cognitive Safety</option>
+                <option value="C3-Instructional-Integrity">Instructional Integrity</option>
+                <option value="C4-Learner-Agency">Learner Agency</option>
+                <option value="C5-Shared-Responsibility">Shared Responsibility</option>
+                <option value="C6-Transition-Integrity">Transition Integrity</option>
+                <option value="C1-CRG">Constitutional Runtime Governance (CRG)</option>
+                <option value="C10-Governance-Window">Governance Window</option>
+              </select>
+
+              <!-- Construct-specific trigger suggestion -->
+              <div id="construct-trigger-suggestion" style="margin-top: 8px; padding: 10px; background: var(--bg-secondary); border-radius: 6px;">
+                <strong id="trigger-suggestion-text">Based on your primary construct, consider:</strong>
+                <span id="suggestion-content"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Patterns You Noticed</label>
+              <textarea name="patterns_observed" placeholder="e.g., Quiz triggers seem to cause most confusion moments. The AI explanation feature is very helpful when triggered..." rows="4"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Surprises (what did you not expect?)</label>
+              <textarea name="surprises" placeholder="e.g., I expected the quizzes to be harder, but they were actually quite manageable once I understood..." rows="3"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Protocol Problems (what's broken or needs fixing?)</label>
+              <textarea name="protocol_problems" placeholder="e.g., The quiz timing is off - it appears before the content is fully explained..." rows="3"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Next Week's Focus (what should we prioritize?)</label>
+              <textarea name="next_week_focus" placeholder="e.g., More focus on transition integrity - the current transitions are too abrupt..." rows="3"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Completeness Check (what else is worth noting?)</label>
+              <select name="completeness_check" required>
+                <option value="">— Select —</option>
+                <option value="complete">Complete - nothing else to add</option>
+                <option value="add_notes">Add additional notes</option>
+              </select>
+
+              <div id="additional-notes-section" style="display: none; margin-top: 10px;">
+                <textarea name="completeness_notes" placeholder="Additional thoughts..." rows="4"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: right; margin-top: 20px;">
+          <button type="submit" class="submit-btn">Submit Weekly Review →</button>
+        </div>
+      </div>
+
+    </form>
+
+    <!-- Success Message -->
+    <div id="success-message" class="success-message">
+      ✓ Form submitted successfully! The data will be processed and saved.
+    </div>
+  </div>
+
+  <script>
+    // ──────────────────────────────────────────────────────────────
+    // CRG Research Forms - Interactive Prototype
+    // Version: 1.0 | Contract: CRGB-FORMS-001
+    // ──────────────────────────────────────────────────────────────
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Form navigation
+      const formButtons = document.querySelectorAll('.nav-btn');
+      const forms = document.querySelectorAll('.form-container');
+
+      formButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetForm = btn.dataset.form;
+          
+          // Update active state
+          formButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          
+          // Show target form
+          forms.forEach(f => f.classList.remove('active'));
+          document.getElementById(targetForm).classList.add('active');
+        });
+      });
+
+      // Auto-generate session ID for Event Logger if Session Intake is filled
+      function updateSessionIdFromIntake() {
+        const intakeSession = document.querySelector('#intake-session-id')?.value;
+        if (intakeSession && !document.getElementById('logger-session-id').value) {
+          document.getElementById('logger-session-id').value = intakeSession || '';
+        }
+      }
+
+      // Update scale labels on range input change
+      function updateScaleLabel(input, labelName) {
+        const value = parseInt(input.value);
+        const labels = [
+          'Exhausted', 'Very low energy', 'Low energy', 
+          'Moderate energy', 'High energy', 'Very high energy',
+          'Extremely energized'
+        ];
+
+        // Update left label (low anchor)
+        document.getElementById(`scale-${labelName.toLowerCase().replace(' ', '-')}-1`).textContent = `1 - ${labels[0]}`;
+        
+        // Update right label (high anchor) with value
+        const highLabel = labels[6];
+        document.getElementById(`scale-${labelName.toLowerCase().replace(' ', '-')}-2`).innerHTML = 
+          `${value} - ${highLabel}`;
+      }
+
+      // Check if Safety trigger is selected, show sub-questions
+      function checkSafetyTrigger(select) {
+        const safetySection = document.getElementById('safety-section');
+        if (select.value === 'safety') {
+          setTimeout(() => safetySection.style.display = 'block', 10);
+        } else {
+          safetySection.style.display = 'none';
+        }
+      }
+
+      function showSafetyQuestions() {
+        checkSafetyTrigger(document.querySelector('#logger-session-id').closest('form').querySelector('[name="trigger"]'));
+      }
+
+      // Check if Breakdown type is selected, auto-set severity minimum to 3
+      let breakdownSeverityMin = false;
+      function checkBreakdownType(select) {
+        const breakdownSection = document.getElementById('severity-val');
+        const input = select.form.querySelector('[name="severity"]');
+        
+        if (select.value === 'breakdown') {
+          breakdownSeverityMin = true;
+          setTimeout(() => {
+            // Auto-set severity to 3 minimum when Breakdown is selected
+            input.min = '3';
+            input.value = Math.max(3, parseInt(input.value) || 3);
+            
+            // Show a tooltip-like message
+            const tooltip = document.createElement('div');
+            tooltip.style.cssText = `
+              position: fixed;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              background: var(--error);
+              color: white;
+              padding: 12px 20px;
+              border-radius: 8px;
+              font-weight: bold;
+              z-index: 100;
+              box-shadow: 0 4px 20px rgba(255,107,107,0.3);
+            `;
+            tooltip.textContent = '⚠️ Breakdown observed - severity auto-set to minimum 3';
+            
+            setTimeout(() => tooltip.remove(), 3000);
+          }, 10);
+        } else {
+          breakdownSeverityMin = false;
+          input.min = '1';
+          if (parseInt(input.value) < 1) input.value = 1;
+        }
+      }
+
+      // Toggle screenshot filename field
+      function toggleScreenshotField() {
+        const screenshotField = document.getElementById('screenshot-field');
+        const takenValue = document.querySelector('[name="screenshot_taken"]:checked')?.value;
+        
+        if (takenValue === 'yes') {
+          setTimeout(() => screenshotField.style.display = 'block', 10);
+        } else {
+          screenshotField.style.display = 'none';
+        }
+      }
+
+      // Update common construct/trigger suggestions
+      function updateCommonConstruct(trigger) {
+        const safetySection = document.getElementById('weekly-safety-section');
+        if (trigger === 'safety') {
+          safetySection.style.display = 'block';
+        } else {
+          safetySection.style.display = 'none';
+        }
+
+        // Suggest construct based on trigger
+        const suggestions = {
+          'confusion_60s': 'Consider Instructional Integrity (C3) or Cognitive Safety (C2)',
+          'ai_explanation': 'Agency (C4) - the AI is helping you understand',
+          'transition': 'Transition Integrity (C6)',
+          'quiz': 'Cognitive Safety (C2) - quizzes can be confusing if too early',
+          'emotion': 'Shared Responsibility (C5) or Cognitive Safety (C2)',
+          'help_requested': 'Learner Agency (C4)'
+        };
+
+        const suggestionContent = suggestions[trigger] || 'No specific suggestion';
+        document.getElementById('suggestion-content').textContent = suggestionContent;
+      }
+
+      function updateCommonTrigger(construct) {
+        const triggerSelect = document.querySelector('#weekly-common-trigger');
+        
+        // Reset all options
+        Array.from(triggerSelect.options).forEach(opt => {
+          opt.disabled = false;
+          opt.selected = false;
+        });
+
+        // Map constructs to preferred triggers (simplified mapping)
+        const constructToTriggers = {
+          'C2-Cognitive-Safety': ['confusion_60s', 'quiz', 'emotion'],
+          'C3-Instructional-Integrity': ['confusion_60s', 'ai_explanation'],
+          'C4-Learner-Agency': ['help_requested', 'success', 'surprise'],
+          'C5-Shared-Responsibility': ['friction', 'emotion'],
+          'C6-Transition-Integrity': ['transition'],
+          'C1-CRG': ['safety', 'system_failure'],
+          'C10-Governance-Window': ['other']
+        };
+
+        const suggestedTriggers = constructToTriggers[construct] || ['other'];
+        
+        suggestedTriggers.forEach(trigger => {
+          if (triggerSelect.querySelector(`option[value="${trigger}"]`)) {
+            triggerSelect.querySelector(`option[value="${trigger}"]`).selected = true;
+            triggerSelect.querySelector(`option[value="${trigger}"]`).disabled = false;
+          }
+        });
+
+        // If no exact match, leave all triggers enabled except safety (if not C1)
+        if (!['C1-CRG', 'C10-Governance-Window'].includes(construct)) {
+          const safetyOption = triggerSelect.querySelector('option[value="safety"]');
+          if (safetyOption && !suggestedTriggers.includes('safety')) {
+            safetyOption.disabled = true;
+          } else {
+            safetyOption.disabled = false;
+          }
+        }
+      }
+
+      // Handle form submissions (prevent default for prototype demo)
+      const formsToHandle = [
+        'crGForm',
+        document.getElementById('logger-session-id').closest('form')?.id,
+        document.getElementById('weekly-common-construct').closest('form')?.id
+      ].filter(Boolean);
+
+      forms.forEach(form => {
+        if (form) {
+          form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Show success message
+            const successMsg = document.getElementById('success-message');
+            successMsg.style.display = 'block';
+            setTimeout(() => {
+              successMsg.style.display = 'none';
+            }, 3000);
+
+            console.log('Form submitted:', form.id);
+            
+            // In production, this would:
+            // 1. Validate all required fields
+            // 2. Send data to Google Forms API or direct backend
+            // 3. Trigger the automation pipeline (Apps Script)
+            // 4. Generate and push evidence files to GitHub
+            
+            alert('Prototype: Form submitted! In production, this would trigger the full automation pipeline.');
+          });
+        }
+      });
+
+      // Event listener for Session ID auto-fill
+      document.getElementById('intake-session-id').addEventListener('change', updateSessionIdFromIntake);
+      
+      // Auto-generate session ID if empty on first view of each form
+      const intakeForm = document.querySelector('#session-intake');
+      intakeForm?.querySelector('[name="session_id"]')?.addEventListener('focus', function() {
+        if (!this.value) {
+          const now = new Date();
+          const yearMonthDay = now.toISOString().split('T')[0].replace(/-/g, '');
+          const hourMin = now.getHours().toString().padStart(2, '0') + 
+                         now.getMinutes().toString().padStart(2, '0');
+          this.value = `pilot001-session-${yearMonthDay}-${hourMin}`;
+        }
+      });
+
+      // Weekly form auto-fill helpers
+      document.getElementById('weekly-week-number').addEventListener('focus', function() {
+        if (!this.value) {
+          const weekNumber = Math.floor(new Date().getDate() / 7);
+          this.value = weekNumber.toString().padStart(2, '0');
+        }
+      });
+
+      console.log('CRG Research Forms loaded successfully! Prototype ready for demo.');
+    });
+  </script>
+</body>
+</html>
