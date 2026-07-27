@@ -167,8 +167,24 @@ graph TB
 |-------|-------|--------|-----------|
 | **Pilot 001** | Quantic Longitudinal Researcher-as-Subject | Protocol ready — awaiting first session | Next Quantic course enrollment |
 | **Pilot 002** | Cross-platform validation | Planned | TBD |
+| 
+| See [`05_experiments/pilot_001/README.md`](05_experiments/pilot_001/README.md) for the complete protocol.
 
-See [`05_experiments/pilot_001/README.md`](05_experiments/pilot_001/README.md) for the complete protocol.
+---
+
+## 👤 About This Project and Its Author
+
+This research program was built on the **OpenScience cockpit** repository — a powerful framework for scientific operating systems that made this work possible. The CRG-ANL team extends and adapts that foundation to focus specifically on Constitutional Runtime Governance in AI-native educational environments.
+
+### Context Behind This Research
+
+I am a neurodivergent student (**schizophrenic, autism, ADHD, OCD, anxiety with psychotic features**) enrolling in Quantic's MS in AI Engineering School starting fall 2026. As an independent researcher, I wanted to deeply understand my learning environment — particularly how AI systems are designed and what their implications might be for students like me. This research project grew from that curiosity into a structured investigation based on the six orientation courses (which are publicly available).
+
+### Important Disclaimers
+
+**This project is not affiliated with Quantic.** The content herein does not represent, reflect, or endorse the views of Quantic in any way. I am an independent student researcher — this work is self-funded and not supported by Quantic or any other institution. All opinions expressed are my own.
+
+The research documented here focuses on understanding AI-native educational systems through empirical observation. The true object of study is a new generation of learning environments where human cognition, neurodiversity, and artificial intelligence intersect.
 
 ---
 
