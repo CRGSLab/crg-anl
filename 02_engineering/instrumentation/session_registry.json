@@ -32,8 +32,22 @@
         "Test this research platfrom while learning the content.."
       ],
       "status": "active"
+    },
+    {
+      "session_number": 3,
+      "session_id": "pilot001-session-003",
+      "date": "2026-07-27",
+      "start_time": "21:39",
+      "device": "desktop",
+      "location": "home",
+      "course": "Lesson 4",
+      "lesson": "Chapter 1, Lesson 4: Fine-Tuning AI Models",
+      "goals": [
+        "Test the crg-anlt data collection system"
+      ],
+      "status": "active"
     }
   ],
-  "next_session_number": 3,
+  "next_session_number": 4,
   "study": "pilot_001"
 }
