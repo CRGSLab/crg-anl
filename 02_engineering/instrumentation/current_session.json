@@ -53,8 +53,16 @@
         "perceived_control": 2,
         "trust": 3
       }
+    },
+    {
+      "number": 5,
+      "time": "18:11",
+      "trigger": "T3",
+      "screenshot": true,
+      "micro_pulse": {}
     }
   ],
-  "event_count": 4,
-  "screenshot_count": 4
+  "event_count": 5,
+  "screenshot_count": 5,
+  "end_time": "19:17"
 }

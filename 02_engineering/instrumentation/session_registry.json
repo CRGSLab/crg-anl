@@ -45,7 +45,10 @@
       "goals": [
         "Test the crg-anlt data collection system"
       ],
-      "status": "active"
+      "status": "completed",
+      "end_time": "19:17",
+      "duration_minutes": -142,
+      "event_count": 5
     }
   ],
   "next_session_number": 4,
