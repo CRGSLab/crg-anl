@@ -1,68 +1,28 @@
 {
-  "session_number": 3,
-  "session_id": "pilot001-session-003",
-  "date": "2026-07-27",
-  "start_time": "21:39",
-  "baseline_file": "03_evidence/observations/baselines/baseline_2026-07-27.md",
-  "log_file": "03_evidence/observations/session_logs/session_log_2026-07-27_2139.md",
-  "screenshot_dir": "03_evidence/observations/screenshots/2026-07-27",
+  "session_number": 4,
+  "session_id": "pilot001-session-004",
+  "date": "2026-07-30",
+  "start_time": "21:27",
+  "baseline_file": "03_evidence/observations/baselines/baseline_2026-07-30.md",
+  "log_file": "03_evidence/observations/session_logs/session_log_2026-07-30_2127.md",
+  "screenshot_dir": "03_evidence/observations/screenshots/2026-07-30",
   "device": "desktop",
   "location": "home",
-  "course": "Lesson 4",
-  "lesson": "Chapter 1, Lesson 4: Fine-Tuning AI Models",
+  "course": "Repeat",
+  "lesson": "Repeat",
   "goals": [
-    "Test the crg-anlt data collection system"
+    "Test the new crg data collection sytem."
   ],
   "events": [
     {
       "number": 1,
-      "time": "14:52",
-      "trigger": "JC",
-      "screenshot": true,
-      "micro_pulse": {
-        "clarity": 5,
-        "cognitive_load": 5,
-        "affect": 1,
-        "perceived_control": 5,
-        "trust": 5
-      }
-    },
-    {
-      "number": 2,
-      "time": "15:01",
+      "time": "21:30",
       "trigger": "T1",
-      "screenshot": true,
-      "micro_pulse": {}
-    },
-    {
-      "number": 3,
-      "time": "15:12",
-      "trigger": "T3",
-      "screenshot": true,
-      "micro_pulse": {}
-    },
-    {
-      "number": 4,
-      "time": "15:30",
-      "trigger": "T2",
-      "screenshot": true,
-      "micro_pulse": {
-        "clarity": 5,
-        "cognitive_load": 4,
-        "affect": 5,
-        "perceived_control": 2,
-        "trust": 3
-      }
-    },
-    {
-      "number": 5,
-      "time": "18:11",
-      "trigger": "T3",
-      "screenshot": true,
+      "screenshot": false,
       "micro_pulse": {}
     }
   ],
-  "event_count": 5,
-  "screenshot_count": 5,
-  "end_time": "19:17"
+  "event_count": 1,
+  "screenshot_count": 0,
+  "end_time": "22:17"
 }

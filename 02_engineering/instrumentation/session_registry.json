@@ -49,8 +49,25 @@
       "end_time": "19:17",
       "duration_minutes": -142,
       "event_count": 5
+    },
+    {
+      "session_number": 4,
+      "session_id": "pilot001-session-004",
+      "date": "2026-07-30",
+      "start_time": "21:27",
+      "device": "desktop",
+      "location": "home",
+      "course": "Repeat",
+      "lesson": "Repeat",
+      "goals": [
+        "Test the new crg data collection sytem."
+      ],
+      "status": "completed",
+      "end_time": "22:17",
+      "duration_minutes": 50,
+      "event_count": 1
     }
   ],
-  "next_session_number": 4,
+  "next_session_number": 5,
   "study": "pilot_001"
 }
