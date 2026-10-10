@@ -1,5 +1,7 @@
 # CRG-ANL: Start Here
 
+[About Corey Alejandro and the connected GitHub accounts](COREY_ALEJANDRO.md) · [Experience the practice](https://corey-alejandro-work-in-motion.coreyalejandro.chatgpt.site)
+
 **This is the fastest way to begin using CRG-ANL.** If you want everything else, read the rest of this file. You can also skip directly to what matters for your goal below.
 
 ---
